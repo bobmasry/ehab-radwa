@@ -71,55 +71,56 @@ body::before {
   z-index: 0;
 }
 
-/* "We Said Yes" Corner Text - RAISED UP */
+/* "We Said Yes" Corner Text - LOWER & SMALLER */
 .hero-corner-text {
   position: absolute;
-  bottom: 120px; /* RAISED UP from bottom */
+  bottom: 50px; /* LOWER - Just above RSVP frame */
   right: 20px;
   text-align: right;
   color: rgba(255, 255, 255, 0.95);
   font-family: 'Playfair Display', serif;
   z-index: 2;
   background: rgba(0, 0, 0, 0.25);
-  padding: 12px 20px;
-  border-radius: 10px;
+  padding: 8px 15px; /* Smaller padding */
+  border-radius: 8px;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
 .we-said-yes {
-  font-size: 1.2rem;
+  font-size: 1rem; /* SMALLER */
   font-style: italic;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   letter-spacing: 1px;
   font-weight: 500;
 }
 
 .corner-date {
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* SMALLER */
   letter-spacing: 2px;
 }
 
+/* HERO CONTENT - RAISED HIGHER */
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 800px;
-  padding: 2rem; /* Reduced padding */
+  padding: 2rem;
   animation: fadeUp 1.6s ease-out;
   margin: 0 20px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  margin-top: -40px; /* RAISED UP - moves content higher */
+  margin-top: -60px; /* RAISED HIGHER - Above "Tap to play" */
 }
 
 .hero-names {
   font-family: 'Playfair Display', serif;
-  font-size: 4.5rem; /* Slightly smaller for mobile */
+  font-size: 4.5rem;
   color: white;
-  margin: 0 0 0.8rem 0; /* Reduced margin */
+  margin: 0 0 0.5rem 0; /* Reduced margin */
   font-weight: 600;
   letter-spacing: 1px;
-  white-space: nowrap; /* PREVENTS WRAPPING */
+  white-space: nowrap;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -127,33 +128,36 @@ body::before {
 }
 
 .hero-subtitle {
-  font-size: 1.8rem; /* Slightly smaller */
+  font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
   letter-spacing: 2.5px;
-  margin-bottom: 1.5rem; /* Reduced margin */
+  margin-bottom: 1rem; /* Reduced margin */
   text-transform: uppercase;
-  white-space: nowrap; /* PREVENTS WRAPPING */
+  white-space: nowrap;
 }
 
+/* HERO DATE - LOWER & SMALLER */
 .hero-date {
   display: inline-block;
   background: rgba(0, 0, 0, 0.35);
-  padding: 0.9rem 2rem; /* Slightly smaller padding */
+  padding: 0.8rem 1.8rem; /* Smaller padding */
   border-radius: 50px;
-  font-size: 1.4rem; /* Slightly smaller font */
+  font-size: 1.2rem; /* SMALLER FONT */
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(8px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   letter-spacing: 2px;
-  margin-top: 0.5rem; /* Added spacing from subtitle */
+  margin-top: 0.5rem;
+  position: relative;
+  top: 20px; /* LOWER - Positioned where "We said yes" was */
 }
 
 /* ===== MUSIC CONTROL ===== */
 .music-control {
   position: fixed;
-  top: 20px; /* Moved down slightly */
+  top: 20px;
   right: 20px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
@@ -179,10 +183,10 @@ body::before {
   color: var(--taupe);
 }
 
-/* Music loading indicator */
+/* Music loading indicator - POSITIONED FOR NEW LAYOUT */
 .music-loading {
   position: fixed;
-  top: 75px; /* POSITIONED BELOW MUSIC BUTTON */
+  top: 75px;
   right: 20px;
   z-index: 1000;
   background: rgba(138, 154, 139, 0.9);
@@ -202,10 +206,10 @@ body::before {
 /* ===== MAIN CARD ===== */
 .wrapper {
   max-width: 720px;
-  margin: -80px auto 60px; /* Less negative margin to raise card */
+  margin: -80px auto 60px;
   background: rgba(255, 255, 255, 0.98);
   border-radius: 28px;
-  padding: 40px 30px; /* Reduced padding */
+  padding: 40px 30px;
   box-shadow: 
     0 25px 70px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(200, 169, 126, 0.08);
@@ -244,7 +248,7 @@ body::before {
 /* ===== LANGUAGE TOGGLE ===== */
 .lang {
   text-align: center;
-  margin-bottom: 28px; /* Reduced margin */
+  margin-bottom: 28px;
 }
 
 .lang button {
@@ -274,16 +278,16 @@ body::before {
 /* ===== TITLES ===== */
 h1 {
   text-align: center;
-  font-size: 40px; /* Slightly smaller */
-  margin: 8px 0; /* Reduced margin */
+  font-size: 40px;
+  margin: 8px 0;
   color: var(--dark-green);
   font-weight: 600;
 }
 
 .subtitle {
   text-align: center;
-  font-size: 18px; /* Slightly smaller */
-  margin-bottom: 25px; /* Reduced margin */
+  font-size: 18px;
+  margin-bottom: 25px;
   color: var(--taupe);
   font-weight: 500;
   letter-spacing: 1px;
@@ -294,7 +298,7 @@ h1 {
   width: 100px;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 25px auto; /* Reduced margin */
+  margin: 25px auto;
   position: relative;
 }
 
@@ -320,7 +324,7 @@ h1 {
 .details {
   text-align: center;
   line-height: 1.8;
-  font-size: 17px; /* Slightly smaller */
+  font-size: 17px;
   color: #3b3a36;
   padding: 0 20px;
 }
@@ -333,7 +337,7 @@ h1 {
 /* ===== MESSAGE ===== */
 .message {
   text-align: center;
-  font-size: 17px; /* Slightly smaller */
+  font-size: 17px;
   line-height: 1.8;
   color: #3b3a36;
   padding: 0 20px;
@@ -343,11 +347,11 @@ h1 {
 /* ===== COUNT SECTION ===== */
 .count {
   text-align: center;
-  margin-top: 25px; /* Reduced margin */
+  margin-top: 25px;
   font-weight: 600;
   color: var(--sage);
   background: rgba(138, 154, 139, 0.06);
-  padding: 12px; /* Reduced padding */
+  padding: 12px;
   border-radius: 15px;
   max-width: 500px;
   margin-left: auto;
@@ -358,7 +362,7 @@ h1 {
 /* ===== BUTTONS ===== */
 .buttons {
   text-align: center;
-  margin-top: 28px; /* Reduced margin */
+  margin-top: 28px;
 }
 
 .buttons a {
@@ -390,7 +394,7 @@ iframe {
   width: 100%;
   height: 620px;
   border: none;
-  margin-top: 30px; /* Reduced margin */
+  margin-top: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -432,40 +436,41 @@ iframe {
 @media (max-width: 768px) {
   .hero-content {
     padding: 1.5rem;
-    margin-top: -20px; /* Less negative on mobile */
+    margin-top: -50px; /* Adjusted for mobile */
   }
   
   .hero-names {
-    font-size: 3.2rem; /* Smaller for mobile */
+    font-size: 3.2rem;
     white-space: nowrap;
     letter-spacing: 0.5px;
   }
   
   .hero-subtitle {
-    font-size: 1.3rem; /* Smaller for mobile */
+    font-size: 1.3rem;
     letter-spacing: 1.5px;
     white-space: nowrap;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
   
   .hero-date {
-    font-size: 1.1rem;
-    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    padding: 0.6rem 1.3rem;
     margin-top: 0.3rem;
+    top: 15px;
   }
   
   .hero-corner-text {
-    bottom: 100px; /* RAISED UP on mobile */
+    bottom: 40px; /* Adjusted for mobile */
     right: 15px;
-    padding: 10px 16px;
+    padding: 6px 12px;
   }
   
   .we-said-yes {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
   .corner-date {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   /* Mobile-specific image adjustment */
@@ -474,7 +479,7 @@ iframe {
   }
   
   .wrapper {
-    margin: -50px auto 40px; /* Less overlap on mobile */
+    margin: -50px auto 40px;
     padding: 30px 20px;
   }
   
@@ -506,7 +511,7 @@ iframe {
 
 @media (max-width: 480px) {
   .hero-names {
-    font-size: 2.5rem; /* Even smaller for very small screens */
+    font-size: 2.5rem;
     white-space: nowrap;
   }
   
@@ -514,6 +519,12 @@ iframe {
     font-size: 1rem;
     letter-spacing: 1px;
     white-space: nowrap;
+  }
+  
+  .hero-date {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    top: 10px;
   }
   
   /* Prevent text wrapping on very small screens */
@@ -524,6 +535,10 @@ iframe {
     
     .hero-subtitle {
       font-size: 0.9rem;
+    }
+    
+    .hero-date {
+      font-size: 0.8rem;
     }
   }
   
@@ -540,7 +555,7 @@ iframe {
     }
     
     .hero-content {
-      margin-top: -10px;
+      margin-top: -40px;
     }
     
     .hero-names {
@@ -549,6 +564,10 @@ iframe {
     
     .hero-subtitle {
       font-size: 1.1rem;
+    }
+    
+    .hero-date {
+      font-size: 1rem;
     }
   }
   
@@ -567,9 +586,9 @@ iframe {
   }
   
   .hero-corner-text {
-    bottom: 90px; /* RAISED UP more on small screens */
+    bottom: 30px;
     right: 10px;
-    padding: 8px 12px;
+    padding: 5px 10px;
   }
   
   .ar .hero-corner-text {
@@ -579,26 +598,25 @@ iframe {
   .hero-content {
     padding: 1rem;
     margin: 0 10px;
-    margin-top: -10px;
+    margin-top: -40px;
   }
   
   iframe {
-    height: 550px; /* Slightly smaller iframe on mobile */
+    height: 550px;
   }
 }
 </style>
 </head>
 
 <body>
-<!-- BACKGROUND MUSIC - FIXED WITH RELIABLE SOURCES -->
+<!-- BACKGROUND MUSIC - NEW APPROACH -->
 <audio id="weddingMusic" loop volume="0.3">
-  <!-- RELIABLE MUSIC SOURCE 1 -->
-  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3" type="audio/mpeg" id="primaryMusic">
+  <!-- Try your Google Drive link first -->
+  <source src="https://drive.google.com/uc?export=download&id=1rbiC9nhBVQ5Zek6Vo1RxBl6kRJubw688" type="audio/mpeg" id="primaryMusic">
   
-  <!-- RELIABLE MUSIC SOURCE 2 -->
+  <!-- Backup sources -->
+  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3" type="audio/mpeg">
   <source src="https://assets.codepen.io/1468070/romantic-piano.mp3" type="audio/mpeg">
-  
-  <!-- RELIABLE MUSIC SOURCE 3 -->
   <source src="https://assets.codepen.io/1480817/canon-in-d.mp3" type="audio/mpeg">
   
   Your browser does not support the audio element.
@@ -616,7 +634,7 @@ iframe {
 
 <!-- HERO SECTION -->
 <section class="hero">
-  <!-- "We Said Yes" Corner Text - RAISED UP -->
+  <!-- "We Said Yes" Corner Text - LOWER & SMALLER -->
   <div class="hero-corner-text">
     <div class="we-said-yes" id="cornerText">We said yes</div>
     <div class="corner-date" id="cornerDate">01/01/2026</div>
@@ -673,7 +691,7 @@ iframe {
 
 <script>
 // ============================================
-// FIXED MUSIC PLAYER - NO GOOGLE DRIVE
+// FIXED MUSIC PLAYER WITH GOOGLE DRIVE FALLBACK
 // ============================================
 
 const music = document.getElementById('weddingMusic');
@@ -686,32 +704,51 @@ let userInteracted = false;
 // Set volume to 30%
 music.volume = 0.3;
 
-// Preload the audio
-music.load();
-
-// Show music loading indicator on mobile
+// Show music loading indicator immediately on mobile
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  setTimeout(() => {
-    if (!isPlaying) {
-      musicLoading.style.display = 'block';
-    }
-  }, 1000);
+  musicLoading.style.display = 'block';
+}
+
+// Function to test if audio source is playable
+function testAudioSource(src) {
+  return new Promise((resolve) => {
+    const audioTest = new Audio();
+    audioTest.src = src;
+    audioTest.preload = 'metadata';
+    
+    audioTest.addEventListener('loadeddata', () => resolve(true));
+    audioTest.addEventListener('error', () => resolve(false));
+    
+    // Timeout in case it hangs
+    setTimeout(() => resolve(false), 3000);
+  });
 }
 
 // Function to play music
-function playMusic() {
+async function playMusic() {
   if (music.paused) {
+    // First try the Google Drive source
+    const driveSource = 'https://drive.google.com/uc?export=download&id=1rbiC9nhBVQ5Zek6Vo1RxBl6kRJubw688';
+    const isDrivePlayable = await testAudioSource(driveSource);
+    
+    if (!isDrivePlayable) {
+      // If Google Drive fails, switch to backup source
+      console.log("Google Drive audio not playable, switching to backup");
+      music.src = 'https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3';
+      music.load();
+    }
+    
     music.play().then(() => {
       isPlaying = true;
       musicIcon.className = 'fas fa-pause';
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
       musicLoading.style.display = 'none';
     }).catch(e => {
-      console.log("Music play failed, trying alternative:", e);
+      console.log("Music play failed:", e);
       musicIcon.className = 'fas fa-music';
       
-      // Show instruction for mobile users
-      musicLoading.textContent = "Tap to play music";
+      // Show instruction for users
+      musicLoading.textContent = "Tap to play music (tap anywhere first)";
       musicLoading.style.display = 'block';
       musicControl.style.background = 'rgba(138, 154, 139, 0.7)';
     });
@@ -751,9 +788,14 @@ musicLoading.addEventListener('click', function() {
 
 // Simple audio initialization
 function initAudio() {
-  // Try to play on desktop
+  // Try to play on desktop after a delay
   if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    setTimeout(playMusic, 1500);
+    setTimeout(() => {
+      if (!userInteracted) {
+        userInteracted = true;
+        playMusic();
+      }
+    }, 1000);
   }
 }
 
@@ -766,7 +808,7 @@ document.addEventListener('click', function() {
     userInteracted = true;
     playMusic();
   }
-}, { once: true });
+});
 
 document.addEventListener('touchstart', function() {
   if (!userInteracted) {
@@ -778,7 +820,7 @@ document.addEventListener('touchstart', function() {
 // Show instruction after 3 seconds if music hasn't started
 setTimeout(function() {
   if (!isPlaying && !userInteracted) {
-    musicLoading.textContent = "Tap the music button to play";
+    musicLoading.textContent = "Tap the music button or anywhere to play";
     musicLoading.style.display = 'block';
     musicControl.style.background = 'rgba(138, 154, 139, 0.7)';
     musicControl.style.boxShadow = '0 5px 20px rgba(138, 154, 139, 0.3)';
@@ -788,7 +830,7 @@ setTimeout(function() {
 // Handle audio errors
 music.addEventListener('error', function(e) {
   console.error("Audio error:", e);
-  musicLoading.textContent = "Music will play after interaction";
+  musicLoading.textContent = "Music ready - tap to play";
   musicLoading.style.display = 'block';
 });
 
