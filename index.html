@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ehab & Radwa | Wedding Invitation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ===== GLOBAL STYLES ===== */
+:root {
+  --cream: #f9f5f0;
+  --sage: #8a9a8b;
+  --taupe: #a68a6f;
+  --dark-green: #4a5d5a;
+  --gold: #c8a97e;
+  --light-gold: #e8d8c3;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f7f3ee 0%, #f0ebe4 100%);
+  font-family: 'Playfair Display', serif;
+  color: #3b3a36;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== BACKGROUND WITH ELEGANT PATTERN ===== */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(200, 169, 126, 0.08) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(138, 154, 139, 0.05) 0%, transparent 20%);
+  z-index: -1;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  height: 100vh;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+    url('https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg');
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0%, rgba(74, 93, 90, 0.08) 50%, rgba(138, 154, 139, 0.03) 100%);
+  z-index: 0;
+}
+
+/* "We Said Yes" Corner Text - RAISED UP */
+.hero-corner-text {
+  position: absolute;
+  bottom: 120px; /* RAISED UP from bottom */
+  right: 20px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'Playfair Display', serif;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 12px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.we-said-yes {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.corner-date {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 2rem; /* Reduced padding */
+  animation: fadeUp 1.6s ease-out;
+  margin: 0 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  margin-top: -40px; /* RAISED UP - moves content higher */
+}
+
+.hero-names {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem; /* Slightly smaller for mobile */
+  color: white;
+  margin: 0 0 0.8rem 0; /* Reduced margin */
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap; /* PREVENTS WRAPPING */
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-subtitle {
+  font-size: 1.8rem; /* Slightly smaller */
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  margin-bottom: 1.5rem; /* Reduced margin */
+  text-transform: uppercase;
+  white-space: nowrap; /* PREVENTS WRAPPING */
+}
+
+.hero-date {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.9rem 2rem; /* Slightly smaller padding */
+  border-radius: 50px;
+  font-size: 1.4rem; /* Slightly smaller font */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  letter-spacing: 2px;
+  margin-top: 0.5rem; /* Added spacing from subtitle */
+}
+
+/* ===== MUSIC CONTROL ===== */
+.music-control {
+  position: fixed;
+  top: 20px; /* Moved down slightly */
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(200, 169, 126, 0.3);
+  transition: all 0.3s ease;
+}
+
+.music-control:hover {
+  transform: scale(1.1);
+  background: white;
+}
+
+.music-control i {
+  font-size: 1.4rem;
+  color: var(--taupe);
+}
+
+/* Music loading indicator */
+.music-loading {
+  position: fixed;
+  top: 75px; /* POSITIONED BELOW MUSIC BUTTON */
+  right: 20px;
+  z-index: 1000;
+  background: rgba(138, 154, 139, 0.9);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== MAIN CARD ===== */
+.wrapper {
+  max-width: 720px;
+  margin: -80px auto 60px; /* Less negative margin to raise card */
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 28px;
+  padding: 40px 30px; /* Reduced padding */
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(200, 169, 126, 0.08);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/* Olive decorations - Enhanced */
+.wrapper::before,
+.wrapper::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.wrapper::before {
+  top: -40px;
+  left: -40px;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Olive_branch_icon.svg/512px-Olive_branch_icon.svg.png");
+}
+
+.wrapper::after {
+  bottom: -40px;
+  right: -40px;
+  transform: rotate(180deg);
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Olive_branch_icon.svg/512px-Olive_branch_icon.svg.png");
+}
+
+/* ===== LANGUAGE TOGGLE ===== */
+.lang {
+  text-align: center;
+  margin-bottom: 28px; /* Reduced margin */
+}
+
+.lang button {
+  background: none;
+  border: 1px solid var(--sage);
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 0 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--sage);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.lang button:hover {
+  background-color: var(--sage);
+  color: white;
+}
+
+.lang button.active {
+  background-color: var(--sage);
+  color: white;
+}
+
+/* ===== TITLES ===== */
+h1 {
+  text-align: center;
+  font-size: 40px; /* Slightly smaller */
+  margin: 8px 0; /* Reduced margin */
+  color: var(--dark-green);
+  font-weight: 600;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 18px; /* Slightly smaller */
+  margin-bottom: 25px; /* Reduced margin */
+  color: var(--taupe);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 25px auto; /* Reduced margin */
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "❧";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 14px;
+}
+
+.divider::before {
+  left: -25px;
+}
+
+.divider::after {
+  right: -25px;
+}
+
+/* ===== DETAILS ===== */
+.details {
+  text-align: center;
+  line-height: 1.8;
+  font-size: 17px; /* Slightly smaller */
+  color: #3b3a36;
+  padding: 0 20px;
+}
+
+.details em {
+  color: var(--taupe);
+  font-style: italic;
+}
+
+/* ===== MESSAGE ===== */
+.message {
+  text-align: center;
+  font-size: 17px; /* Slightly smaller */
+  line-height: 1.8;
+  color: #3b3a36;
+  padding: 0 20px;
+  font-style: italic;
+}
+
+/* ===== COUNT SECTION ===== */
+.count {
+  text-align: center;
+  margin-top: 25px; /* Reduced margin */
+  font-weight: 600;
+  color: var(--sage);
+  background: rgba(138, 154, 139, 0.06);
+  padding: 12px; /* Reduced padding */
+  border-radius: 15px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(138, 154, 139, 0.1);
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+  text-align: center;
+  margin-top: 28px; /* Reduced margin */
+}
+
+.buttons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px;
+  padding: 14px 32px;
+  background: var(--sage);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--sage);
+  font-weight: 500;
+  min-width: 180px;
+}
+
+.buttons a:hover {
+  background: white;
+  color: var(--sage);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== IFRAME ===== */
+iframe {
+  width: 100%;
+  height: 620px;
+  border: none;
+  margin-top: 30px; /* Reduced margin */
+  border-radius: 15px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ===== ARABIC ===== */
+.ar {
+  direction: rtl;
+  font-family: 'Amiri', serif;
+}
+
+.ar h1 {
+  font-family: 'Amiri', serif;
+  font-weight: 700;
+}
+
+.ar .hero-corner-text {
+  right: auto;
+  left: 20px;
+  text-align: left;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ===== RESPONSIVE - MOBILE FIXES ===== */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 1.5rem;
+    margin-top: -20px; /* Less negative on mobile */
+  }
+  
+  .hero-names {
+    font-size: 3.2rem; /* Smaller for mobile */
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.3rem; /* Smaller for mobile */
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-date {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem;
+    margin-top: 0.3rem;
+  }
+  
+  .hero-corner-text {
+    bottom: 100px; /* RAISED UP on mobile */
+    right: 15px;
+    padding: 10px 16px;
+  }
+  
+  .we-said-yes {
+    font-size: 1rem;
+  }
+  
+  .corner-date {
+    font-size: 0.8rem;
+  }
+  
+  /* Mobile-specific image adjustment */
+  .hero {
+    background-position: center 35%;
+  }
+  
+  .wrapper {
+    margin: -50px auto 40px; /* Less overlap on mobile */
+    padding: 30px 20px;
+  }
+  
+  h1 {
+    font-size: 32px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  .buttons a {
+    padding: 12px 24px;
+    min-width: 160px;
+  }
+  
+  .music-loading {
+    top: 70px;
+    right: 15px;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  .music-control {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-names {
+    font-size: 2.5rem; /* Even smaller for very small screens */
+    white-space: nowrap;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  
+  /* Prevent text wrapping on very small screens */
+  @media (max-width: 380px) {
+    .hero-names {
+      font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Mobile landscape/portrait adjustment */
+  @media (orientation: portrait) {
+    .hero {
+      background-position: center 30%;
+    }
+  }
+  
+  @media (orientation: landscape) {
+    .hero {
+      background-position: center 25%;
+    }
+    
+    .hero-content {
+      margin-top: -10px;
+    }
+    
+    .hero-names {
+      font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .wrapper {
+    padding: 25px 18px;
+    margin: -40px auto 30px;
+  }
+  
+  .divider {
+    margin: 20px auto;
+  }
+  
+  .lang button {
+    padding: 8px 16px;
+    margin: 0 4px;
+  }
+  
+  .hero-corner-text {
+    bottom: 90px; /* RAISED UP more on small screens */
+    right: 10px;
+    padding: 8px 12px;
+  }
+  
+  .ar .hero-corner-text {
+    left: 10px;
+  }
+  
+  .hero-content {
+    padding: 1rem;
+    margin: 0 10px;
+    margin-top: -10px;
+  }
+  
+  iframe {
+    height: 550px; /* Slightly smaller iframe on mobile */
+  }
+}
+</style>
+</head>
+
+<body>
+<!-- BACKGROUND MUSIC - FIXED WITH RELIABLE SOURCES -->
+<audio id="weddingMusic" loop volume="0.3">
+  <!-- RELIABLE MUSIC SOURCE 1 -->
+  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3" type="audio/mpeg" id="primaryMusic">
+  
+  <!-- RELIABLE MUSIC SOURCE 2 -->
+  <source src="https://assets.codepen.io/1468070/romantic-piano.mp3" type="audio/mpeg">
+  
+  <!-- RELIABLE MUSIC SOURCE 3 -->
+  <source src="https://assets.codepen.io/1480817/canon-in-d.mp3" type="audio/mpeg">
+  
+  Your browser does not support the audio element.
+</audio>
+
+<!-- MUSIC CONTROL -->
+<div class="music-control" id="musicControl">
+  <i class="fas fa-music"></i>
+</div>
+
+<!-- Music loading indicator -->
+<div class="music-loading" id="musicLoading">
+  Tap to play music
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <!-- "We Said Yes" Corner Text - RAISED UP -->
+  <div class="hero-corner-text">
+    <div class="we-said-yes" id="cornerText">We said yes</div>
+    <div class="corner-date" id="cornerDate">01/01/2026</div>
+  </div>
+  
+  <div class="hero-content">
+    <h1 class="hero-names floating" id="heroTitle">Ehab & Radwa</h1>
+    <p class="hero-subtitle floating" id="heroSubtitle">We're getting married</p>
+    <div class="hero-date">April 10, 2026</div>
+  </div>
+</section>
+
+<!-- MAIN CARD -->
+<div class="wrapper" id="card">
+  <div class="lang">
+    <button class="active" onclick="setLang('en')">English</button>
+    <button onclick="setLang('ar')">العربية</button>
+  </div>
+
+  <h1 id="title">Ehab & Radwa</h1>
+  <div class="subtitle" id="subtitle">We're getting married</div>
+
+  <div class="divider"></div>
+
+  <div class="details" id="details">
+    April 10, 2026<br>
+    SUNSET – Wedding Garden<br>
+    Abou Rawash, Kerdasa, Giza Governorate<br>
+    Cairo-Egypt<br>
+    <em>Outdoor Wedding</em>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="message" id="message">
+    With great joy, we invite you to celebrate our wedding. Your presence means the world to us.
+  </p>
+
+  <p class="count">
+    🎉 <span id="guestCount">Loading…</span> <span id="guestText">guests confirmed</span>
+  </p>
+
+  <p class="count" id="countdown">Loading countdown…</p>
+
+  <div class="buttons">
+    <a href="https://www.google.com/maps?q=30.070996666532338,31.09549625024231" target="_blank">
+      <i class="fas fa-map-marked-alt"></i> <span id="directionsText">Get Directions</span>
+    </a>
+  </div>
+
+  <!-- RSVP FORM -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeTRzLDYJJWZ22GJhfsoVt8f9zF8BFUW35gkHCAIwEY68lzmQ/viewform"></iframe>
+</div>
+
+<script>
+// ============================================
+// FIXED MUSIC PLAYER - NO GOOGLE DRIVE
+// ============================================
+
+const music = document.getElementById('weddingMusic');
+const musicControl = document.getElementById('musicControl');
+const musicLoading = document.getElementById('musicLoading');
+const musicIcon = musicControl.querySelector('i');
+let isPlaying = false;
+let userInteracted = false;
+
+// Set volume to 30%
+music.volume = 0.3;
+
+// Preload the audio
+music.load();
+
+// Show music loading indicator on mobile
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  setTimeout(() => {
+    if (!isPlaying) {
+      musicLoading.style.display = 'block';
+    }
+  }, 1000);
+}
+
+// Function to play music
+function playMusic() {
+  if (music.paused) {
+    music.play().then(() => {
+      isPlaying = true;
+      musicIcon.className = 'fas fa-pause';
+      musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+      musicLoading.style.display = 'none';
+    }).catch(e => {
+      console.log("Music play failed, trying alternative:", e);
+      musicIcon.className = 'fas fa-music';
+      
+      // Show instruction for mobile users
+      musicLoading.textContent = "Tap to play music";
+      musicLoading.style.display = 'block';
+      musicControl.style.background = 'rgba(138, 154, 139, 0.7)';
+    });
+  }
+}
+
+// Function to pause music
+function pauseMusic() {
+  if (!music.paused) {
+    music.pause();
+    isPlaying = false;
+    musicIcon.className = 'fas fa-music';
+    musicControl.style.background = 'rgba(255, 255, 255, 0.9)';
+  }
+}
+
+// Music control click handler
+musicControl.addEventListener('click', function() {
+  if (!userInteracted) {
+    userInteracted = true;
+  }
+  
+  if (isPlaying) {
+    pauseMusic();
+  } else {
+    playMusic();
+  }
+});
+
+// Also allow clicking the loading message
+musicLoading.addEventListener('click', function() {
+  if (!userInteracted) {
+    userInteracted = true;
+  }
+  playMusic();
+});
+
+// Simple audio initialization
+function initAudio() {
+  // Try to play on desktop
+  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    setTimeout(playMusic, 1500);
+  }
+}
+
+// Initialize on page load
+window.addEventListener('load', initAudio);
+
+// Enable audio when user interacts with the page
+document.addEventListener('click', function() {
+  if (!userInteracted) {
+    userInteracted = true;
+    playMusic();
+  }
+}, { once: true });
+
+document.addEventListener('touchstart', function() {
+  if (!userInteracted) {
+    userInteracted = true;
+    playMusic();
+  }
+}, { once: true });
+
+// Show instruction after 3 seconds if music hasn't started
+setTimeout(function() {
+  if (!isPlaying && !userInteracted) {
+    musicLoading.textContent = "Tap the music button to play";
+    musicLoading.style.display = 'block';
+    musicControl.style.background = 'rgba(138, 154, 139, 0.7)';
+    musicControl.style.boxShadow = '0 5px 20px rgba(138, 154, 139, 0.3)';
+  }
+}, 3000);
+
+// Handle audio errors
+music.addEventListener('error', function(e) {
+  console.error("Audio error:", e);
+  musicLoading.textContent = "Music will play after interaction";
+  musicLoading.style.display = 'block';
+});
+
+// ============================================
+// LANGUAGE CONTENT
+// ============================================
+const content = {
+  en: {
+    heroTitle: "Ehab & Radwa",
+    heroSubtitle: "We're getting married",
+    title: "Ehab & Radwa",
+    subtitle: "We're getting married",
+    details: "April 10, 2026<br>SUNSET – Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
+    message: "With great joy, we invite you to celebrate our wedding. Your presence means the world to us.",
+    cornerText: "We said yes",
+    cornerDate: "01/01/2026",
+    guestText: "guests confirmed",
+    directionsText: "Get Directions",
+    countdownText: "days to go"
+  },
+  ar: {
+    heroTitle: "إيهاب ورضوى",
+    heroSubtitle: "يسعدنا دعوتكم لحفل زفافنا",
+    title: "إيهاب ورضوى",
+    subtitle: "يسعدنا دعوتكم لحفل زفافنا",
+    details: "10 أبريل 2026<br>سن ست - المنصوريه بارك<br>حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
+    message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
+    cornerText: "قلنا نعم",
+    cornerDate: "٠١/٠١/٢٠٢٦",
+    guestText: "ضيفاً أكدوا الحضور",
+    directionsText: "احصل على الاتجاهات",
+    countdownText: "يوم للمتبقي"
+  }
+};
+
+function setLang(lang) {
+  // Update button states
+  document.querySelectorAll('.lang button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  // Update all text elements
+  document.getElementById("heroTitle").innerHTML = content[lang].heroTitle;
+  document.getElementById("heroSubtitle").innerHTML = content[lang].heroSubtitle;
+  document.getElementById("title").innerHTML = content[lang].title;
+  document.getElementById("subtitle").innerHTML = content[lang].subtitle;
+  document.getElementById("details").innerHTML = content[lang].details;
+  document.getElementById("message").innerHTML = content[lang].message;
+  document.getElementById("cornerText").innerHTML = content[lang].cornerText;
+  document.getElementById("cornerDate").innerHTML = content[lang].cornerDate;
+  document.getElementById("guestText").innerHTML = content[lang].guestText;
+  document.getElementById("directionsText").innerHTML = content[lang].directionsText;
+  
+  // Update countdown text for Arabic
+  updateCountdown(lang);
+  
+  // Update card direction for Arabic
+  document.getElementById("card").className = "wrapper " + (lang === "ar" ? "ar" : "");
+}
+
+// LIVE GUEST COUNT
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRcFln6zjhh17fh8cViZnzhe-7DK3QkjyceT5L7FIinCrWJ0ARx_FzyXqMHDAyEIgSaCM3kGz5cXcXf/pub?gid=2032972080&single=true&output=txt")
+  .then(r => r.text())
+  .then(n => {
+    const guestCount = n.trim();
+    document.getElementById("guestCount").innerText = guestCount;
+    window.guestCount = guestCount;
+  })
+  .catch(error => {
+    console.error('Error fetching guest count:', error);
+    document.getElementById("guestCount").innerText = "Many";
+    window.guestCount = "Many";
+  });
+
+// COUNTDOWN TIMER
+const weddingDate = new Date("2026-04-10T18:00:00");
+
+function updateCountdown(lang = 'en') {
+  const now = new Date();
+  const diff = weddingDate - now;
+
+  if (diff <= 0) {
+    document.getElementById("countdown").innerText = lang === 'ar' ? "🎉 اليوم هو يوم الزفاف!" : "🎉 Today is the wedding!";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+  if (lang === 'ar') {
+    document.getElementById("countdown").innerText = `⏳ ${days} يوم و ${hours} ساعة و ${minutes} دقيقة للمتبقي`;
+  } else {
+    document.getElementById("countdown").innerText = `⏳ ${days} days, ${hours} hours, ${minutes} minutes to go`;
+  }
+}
+
+// Initialize countdown
+updateCountdown('en');
+
+// Update countdown every minute
+setInterval(() => {
+  const currentLang = document.querySelector('.lang button.active').textContent.trim();
+  updateCountdown(currentLang === 'English' ? 'en' : 'ar');
+}, 60000);
+
+// Initialize with English
+setLang('en');
+</script>
+</body>
+</html>
