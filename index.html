@@ -71,7 +71,7 @@ body::before {
   z-index: 0;
 }
 
-/* "We Said Yes" Corner Text */
+/* "We Said Yes!" Corner Text - WITH EXCLAMATION MARK */
 .hero-corner-text {
   position: absolute;
   bottom: 80px;
@@ -118,7 +118,7 @@ body::before {
   font-family: 'Playfair Display', serif;
   font-size: 4.8rem; /* SMALLER from 5.5rem */
   color: white;
-  margin: 0 0 0.3rem 0;
+  margin: 0 0 0.1rem 0; /* Reduced margin to bring subtitle closer */
   font-weight: 600;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -128,17 +128,18 @@ body::before {
   text-overflow: ellipsis;
 }
 
+/* We're getting married - RAISED SLIGHTLY (closer to names) */
 .hero-subtitle {
   font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
   letter-spacing: 2.5px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem; /* Reduced margin to be closer to names */
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* HERO DATE - LOWERED MUCH MORE (double the gap) */
+/* HERO DATE - LOWERED EXTREMELY LOW (doubled from previous) */
 .hero-date {
   display: inline-block;
   background: rgba(0, 0, 0, 0.35);
@@ -150,9 +151,9 @@ body::before {
   backdrop-filter: blur(8px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   letter-spacing: 2px;
-  margin-top: 4rem; /* DOUBLED from 2.5rem to 4rem */
+  margin-top: 10rem; /* EXTREMELY LOW - doubled from 8rem to 10rem */
   position: relative;
-  top: 100px; /* DOUBLED from 60px to 100px - much lower */
+  top: 220px; /* EXTREMELY LOW - increased from 200px to 220px */
 }
 
 /* ===== MUSIC CONTROL ===== */
@@ -438,20 +439,21 @@ iframe {
     font-size: 3.5rem; /* Adjusted for mobile */
     white-space: nowrap;
     letter-spacing: 0.5px;
+    margin: 0 0 0.05rem 0; /* Even closer on mobile */
   }
   
   .hero-subtitle {
     font-size: 1.3rem;
     letter-spacing: 1.5px;
     white-space: nowrap;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.1rem; /* Even closer on mobile */
   }
   
   .hero-date {
     font-size: 1rem;
     padding: 0.6rem 1.3rem;
-    margin-top: 3rem; /* Adjusted for mobile */
-    top: 70px; /* Adjusted for mobile */
+    margin-top: 8rem; /* Adjusted for mobile */
+    top: 160px; /* Adjusted for mobile */
   }
   
   .hero-corner-text {
@@ -508,19 +510,21 @@ iframe {
   .hero-names {
     font-size: 2.8rem; /* Adjusted for small mobile */
     white-space: nowrap;
+    margin: 0 0 0.05rem 0;
   }
   
   .hero-subtitle {
     font-size: 1rem;
     letter-spacing: 1px;
     white-space: nowrap;
+    margin-bottom: 0.1rem;
   }
   
   .hero-date {
     font-size: 0.9rem;
     padding: 0.5rem 1.2rem;
-    margin-top: 2.5rem; /* Adjusted for small mobile */
-    top: 50px; /* Adjusted for small mobile */
+    margin-top: 6rem; /* Adjusted for small mobile */
+    top: 130px; /* Adjusted for small mobile */
   }
   
   /* Prevent text wrapping on very small screens */
@@ -632,9 +636,9 @@ iframe {
 
 <!-- HERO SECTION -->
 <section class="hero">
-  <!-- "We Said Yes" Corner Text -->
+  <!-- "We Said Yes!" Corner Text - WITH EXCLAMATION MARK -->
   <div class="hero-corner-text">
-    <div class="we-said-yes" id="cornerText">We said yes</div>
+    <div class="we-said-yes" id="cornerText">We said yes!</div>
     <div class="corner-date" id="cornerDate">01/01/2026</div>
   </div>
   
@@ -792,7 +796,7 @@ music.addEventListener('loadeddata', function() {
 });
 
 // ============================================
-// LANGUAGE CONTENT
+// LANGUAGE CONTENT (UPDATED WITH EXCLAMATION MARK)
 // ============================================
 const content = {
   en: {
@@ -802,7 +806,7 @@ const content = {
     subtitle: "We're getting married",
     details: "April 10, 2026<br>SUNSET – Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
     message: "With great joy, we invite you to celebrate our wedding. Your presence means the world to us.",
-    cornerText: "We said yes",
+    cornerText: "We said yes!", // ADDED EXCLAMATION MARK
     cornerDate: "01/01/2026",
     guestText: "guests confirmed",
     directionsText: "Get Directions",
@@ -815,7 +819,7 @@ const content = {
     subtitle: "يسعدنا دعوتكم لحفل زفافنا",
     details: "10 أبريل 2026<br>سن ست - المنصوريه بارك<br>حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
     message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
-    cornerText: "قلنا نعم",
+    cornerText: "قلنا نعم!", // ADDED EXCLAMATION MARK IN ARABIC
     cornerDate: "٠١/٠١/٢٠٢٦",
     guestText: "ضيفاً أكدوا الحضور",
     directionsText: "احصل على الاتجاهات",
