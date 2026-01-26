@@ -113,15 +113,15 @@ body::before {
   margin-top: -100px;
 }
 
-/* Ehab & Radwa - BIGGER FONT */
+/* Ehab & Radwa - SMALLER FONT as requested */
 .hero-names {
   font-family: 'Playfair Display', serif;
-  font-size: 5.5rem; /* BIGGER from 4.5rem */
-  color: white; /* Ensured white font */
+  font-size: 4.8rem; /* SMALLER from 5.5rem */
+  color: white;
   margin: 0 0 0.3rem 0;
   font-weight: 600;
   letter-spacing: 1px;
-  white-space: nowrap; /* All on one line */
+  white-space: nowrap;
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
@@ -138,7 +138,7 @@ body::before {
   white-space: nowrap;
 }
 
-/* HERO DATE - LOWERED (slightly above "We said yes") */
+/* HERO DATE - LOWERED to be 3 lines above "We said yes" */
 .hero-date {
   display: inline-block;
   background: rgba(0, 0, 0, 0.35);
@@ -150,9 +150,9 @@ body::before {
   backdrop-filter: blur(8px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   letter-spacing: 2px;
-  margin-top: 1.5rem; /* Increased margin to lower it */
+  margin-top: 2.5rem; /* Increased margin to lower it more */
   position: relative;
-  top: 30px; /* LOWERED - positioned lower */
+  top: 60px; /* LOWERED significantly - 3 lines above */
 }
 
 /* ===== MUSIC CONTROL ===== */
@@ -182,6 +182,20 @@ body::before {
 .music-control i {
   font-size: 1.4rem;
   color: var(--taupe);
+}
+
+/* Music status indicator */
+.music-status {
+  position: fixed;
+  top: 75px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(138, 154, 139, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: none;
 }
 
 /* ===== MAIN CARD ===== */
@@ -421,7 +435,7 @@ iframe {
   }
   
   .hero-names {
-    font-size: 4rem; /* Adjusted for mobile */
+    font-size: 3.5rem; /* Adjusted for mobile */
     white-space: nowrap;
     letter-spacing: 0.5px;
   }
@@ -436,8 +450,8 @@ iframe {
   .hero-date {
     font-size: 1rem;
     padding: 0.6rem 1.3rem;
-    margin-top: 1.2rem;
-    top: 20px;
+    margin-top: 2rem;
+    top: 40px; /* Adjusted for mobile */
   }
   
   .hero-corner-text {
@@ -481,11 +495,18 @@ iframe {
     top: 15px;
     right: 15px;
   }
+  
+  .music-status {
+    top: 70px;
+    right: 15px;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
 }
 
 @media (max-width: 480px) {
   .hero-names {
-    font-size: 3rem; /* Adjusted for small mobile */
+    font-size: 2.8rem; /* Adjusted for small mobile */
     white-space: nowrap;
   }
   
@@ -498,14 +519,14 @@ iframe {
   .hero-date {
     font-size: 0.9rem;
     padding: 0.5rem 1.2rem;
-    margin-top: 1rem;
-    top: 15px;
+    margin-top: 1.5rem;
+    top: 30px; /* Adjusted for small mobile */
   }
   
   /* Prevent text wrapping on very small screens */
   @media (max-width: 380px) {
     .hero-names {
-      font-size: 2.5rem;
+      font-size: 2.3rem;
     }
     
     .hero-subtitle {
@@ -584,16 +605,19 @@ iframe {
 </head>
 
 <body>
-<!-- BACKGROUND MUSIC - FIXED WITH PROPER GITHUB URL -->
+<!-- BACKGROUND MUSIC - WITH YOUR DROPBOX LINK -->
 <audio id="weddingMusic" loop volume="0.3">
-  <!-- IMPORTANT: Use the RAW GitHub URL for your MP3 -->
-  <!-- Replace 'your-music.mp3' with your actual filename -->
-  https://ufile.io/nwj945vc
+  <!-- YOUR DROPBOX MUSIC (fixed URL with ?raw=1) -->
+  <source src="https://www.dropbox.com/scl/fi/fpfms7u1tzddtgw0f5dso/1-2.mp3?rlkey=qoy1dxmx0icqqbp9fu186l583&st=ywdfloyq&raw=1" type="audio/mpeg">
   
-  <!-- Backup romantic music -->
+  <!-- Backup source 1 -->
   <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3" type="audio/mpeg">
   
+  <!-- Backup source 2 -->
   <source src="https://assets.codepen.io/1468070/romantic-piano.mp3" type="audio/mpeg">
+  
+  <!-- Backup source 3 -->
+  <source src="https://assets.codepen.io/1480817/canon-in-d.mp3" type="audio/mpeg">
   
   Your browser does not support the audio element.
 </audio>
@@ -602,6 +626,9 @@ iframe {
 <div class="music-control" id="musicControl">
   <i class="fas fa-music"></i>
 </div>
+
+<!-- Music status indicator -->
+<div class="music-status" id="musicStatus"></div>
 
 <!-- HERO SECTION -->
 <section class="hero">
@@ -662,37 +689,53 @@ iframe {
 
 <script>
 // ============================================
-// WORKING MUSIC PLAYER
+// MUSIC PLAYER WITH YOUR DROPBOX MUSIC
 // ============================================
 
 const music = document.getElementById('weddingMusic');
 const musicControl = document.getElementById('musicControl');
+const musicStatus = document.getElementById('musicStatus');
 const musicIcon = musicControl.querySelector('i');
 let isPlaying = false;
 
 // Set volume to 30%
 music.volume = 0.3;
 
-// Preload the audio
-music.load();
+// Show initial status
+musicStatus.textContent = "Music ready";
+musicStatus.style.display = 'block';
 
-// Function to play music - SIMPLE & RELIABLE
+// Function to play music
 function playMusic() {
-  console.log("Attempting to play music...");
+  console.log("Playing music from Dropbox...");
   
   music.play().then(() => {
-    console.log("Music playing successfully");
+    console.log("Music started successfully");
     isPlaying = true;
     musicIcon.className = 'fas fa-pause';
     musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+    musicStatus.textContent = "Music playing";
+    musicStatus.style.background = 'rgba(138, 154, 139, 0.9)';
   }).catch(e => {
-    console.log("Music play failed:", e);
-    musicIcon.className = 'fas fa-music';
-    musicControl.style.background = 'rgba(138, 154, 139, 0.7)';
+    console.log("Dropbox music play failed:", e);
+    musicStatus.textContent = "Tap to play music";
+    musicStatus.style.background = 'rgba(138, 154, 139, 0.7)';
     
-    // Show simple alert for mobile users
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      console.log("Mobile device detected - music may require user interaction");
+    // Try the backup source automatically
+    if (e.name === 'NotSupportedError' || e.name === 'TypeError') {
+      console.log("Trying backup music source...");
+      music.src = 'https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3';
+      music.load();
+      
+      // Try playing again after loading
+      setTimeout(() => {
+        music.play().then(() => {
+          isPlaying = true;
+          musicIcon.className = 'fas fa-pause';
+          musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+          musicStatus.textContent = "Playing backup music";
+        });
+      }, 500);
     }
   });
 }
@@ -703,12 +746,12 @@ function pauseMusic() {
   isPlaying = false;
   musicIcon.className = 'fas fa-music';
   musicControl.style.background = 'rgba(255, 255, 255, 0.9)';
+  musicStatus.textContent = "Music paused";
+  musicStatus.style.background = 'rgba(138, 154, 139, 0.7)';
 }
 
-// Music control click handler - SIMPLE
+// Music control click handler
 musicControl.addEventListener('click', function() {
-  console.log("Music button clicked");
-  
   if (isPlaying) {
     pauseMusic();
   } else {
@@ -716,54 +759,36 @@ musicControl.addEventListener('click', function() {
   }
 });
 
-// Try to play on desktop after page loads
+// Also allow clicking the status message
+musicStatus.addEventListener('click', function() {
+  if (!isPlaying) {
+    playMusic();
+  }
+});
+
+// Initialize when page loads
 window.addEventListener('load', function() {
-  console.log("Page loaded, checking device...");
+  // On mobile, we need user interaction first
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
-  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    // Desktop - try to auto-play after delay
-    console.log("Desktop detected, attempting auto-play...");
-    setTimeout(playMusic, 1000);
-  } else {
-    console.log("Mobile device detected - waiting for user interaction");
+  if (!isMobile) {
+    // On desktop, try to auto-play after a short delay
+    setTimeout(() => {
+      playMusic();
+    }, 1500);
   }
 });
-
-// Allow clicking anywhere to start music (important for mobile)
-let userHasInteracted = false;
-
-document.addEventListener('click', function() {
-  if (!userHasInteracted) {
-    console.log("First user interaction detected");
-    userHasInteracted = true;
-    // Don't auto-play on mobile, just mark that user has interacted
-  }
-});
-
-document.addEventListener('touchstart', function() {
-  if (!userHasInteracted) {
-    console.log("First touch interaction detected");
-    userHasInteracted = true;
-  }
-}, { once: true });
 
 // Handle audio errors
 music.addEventListener('error', function(e) {
-  console.error("Audio error - primary source failed:", e);
-  console.log("Trying backup source...");
-  
-  // Switch to backup source
-  music.src = 'https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3';
-  music.load();
-  
-  // Update music control to use backup
-  musicControl.addEventListener('click', function() {
-    if (music.paused) {
-      playMusic();
-    } else {
-      pauseMusic();
-    }
-  });
+  console.error("Music error:", e);
+  musicStatus.textContent = "Music loading...";
+});
+
+// When audio successfully loads
+music.addEventListener('loadeddata', function() {
+  console.log("Music loaded successfully");
+  musicStatus.textContent = "Music ready to play";
 });
 
 // ============================================
