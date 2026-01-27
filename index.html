@@ -51,7 +51,7 @@ body::before {
     linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
     url('https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg');
   background-size: cover;
-  background-position: center center;
+  background-position: center 30%; /* SHIFTED IMAGE UP */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +71,7 @@ body::before {
   z-index: 0;
 }
 
-/* "We Said Yes!" Corner Text - SMALLER to avoid overlap */
+/* "We said yes" Corner Text - NO TRANSLUCENT BACKGROUND */
 .hero-corner-text {
   position: absolute;
   bottom: 80px;
@@ -80,16 +80,11 @@ body::before {
   color: rgba(255, 255, 255, 0.95);
   font-family: 'Playfair Display', serif;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 6px 12px; /* Smaller padding */
-  border-radius: 8px;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  /* REMOVED background, backdrop-filter, border, box-shadow */
 }
 
 .we-said-yes {
-  font-size: 0.85rem; /* SMALLER font */
+  font-size: 0.85rem;
   font-style: italic;
   margin-bottom: 2px;
   letter-spacing: 1px;
@@ -97,7 +92,7 @@ body::before {
 }
 
 .corner-date {
-  font-size: 0.7rem; /* SMALLER font */
+  font-size: 0.7rem;
   letter-spacing: 1.5px;
 }
 
@@ -128,43 +123,41 @@ body::before {
   text-overflow: ellipsis;
 }
 
-/* We're getting married - RAISED SLIGHTLY (closer to names) */
+/* We're getting married - SMALL CAPS (not all caps) */
 .hero-subtitle {
   font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
   letter-spacing: 2.5px;
   margin-bottom: 0.2rem; /* Reduced margin to be closer to names */
-  text-transform: uppercase;
+  text-transform: none; /* CHANGED from uppercase to none */
   white-space: nowrap;
+  font-style: italic;
 }
 
-/* HERO DATE - RAISED SLIGHTLY HIGHER with BIGGER FONT */
+/* HERO DATE - NO TRANSLUCENT BACKGROUND */
 .hero-date {
   display: inline-block;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 0.9rem 2rem; /* Slightly bigger padding */
-  border-radius: 50px;
-  font-size: 1.4rem; /* BIGGER font (from 1.2rem) */
+  /* REMOVED background, border, backdrop-filter, box-shadow */
+  padding: 0.5rem 0; /* Simplified padding */
+  border-radius: 0; /* Removed rounded corners */
+  font-size: 1.4rem; /* BIGGER font */
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   letter-spacing: 2px;
   margin-top: 7rem; /* RAISED from 10rem to 7rem (higher) */
   position: relative;
   top: 160px; /* RAISED from 220px to 160px (higher) */
 }
 
-/* ===== MUSIC CONTROL ===== */
+/* ===== MUSIC CONTROL - SMALLER ===== */
 .music-control {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
-  width: 50px;
-  height: 50px;
+  width: 40px; /* SMALLER */
+  height: 40px; /* SMALLER */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -181,23 +174,11 @@ body::before {
 }
 
 .music-control i {
-  font-size: 1.4rem;
+  font-size: 1.1rem; /* SMALLER icon */
   color: var(--taupe);
 }
 
-/* Music status indicator */
-.music-status {
-  position: fixed;
-  top: 75px;
-  right: 20px;
-  z-index: 1000;
-  background: rgba(138, 154, 139, 0.9);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  display: none;
-}
+/* REMOVED music-status class entirely */
 
 /* ===== MAIN CARD ===== */
 .wrapper {
@@ -430,6 +411,10 @@ iframe {
 
 /* ===== RESPONSIVE - MOBILE FIXES ===== */
 @media (max-width: 768px) {
+  .hero {
+    background-position: center 35%; /* Adjusted for mobile */
+  }
+  
   .hero-content {
     padding: 1.5rem;
     margin-top: -80px;
@@ -447,11 +432,12 @@ iframe {
     letter-spacing: 1.5px;
     white-space: nowrap;
     margin-bottom: 0.1rem; /* Even closer on mobile */
+    text-transform: none; /* Ensure not uppercase on mobile */
   }
   
   .hero-date {
     font-size: 1.2rem; /* Bigger font on mobile too */
-    padding: 0.7rem 1.5rem;
+    padding: 0.3rem 0;
     margin-top: 5rem; /* Adjusted for mobile */
     top: 120px; /* Adjusted for mobile */
   }
@@ -459,7 +445,6 @@ iframe {
   .hero-corner-text {
     bottom: 70px;
     right: 15px;
-    padding: 5px 10px; /* Smaller on mobile */
   }
   
   .we-said-yes {
@@ -468,11 +453,6 @@ iframe {
   
   .corner-date {
     font-size: 0.65rem; /* Smaller on mobile */
-  }
-  
-  /* Mobile-specific image adjustment */
-  .hero {
-    background-position: center 35%;
   }
   
   .wrapper {
@@ -496,17 +476,20 @@ iframe {
   .music-control {
     top: 15px;
     right: 15px;
+    width: 35px; /* Smaller on mobile */
+    height: 35px; /* Smaller on mobile */
   }
   
-  .music-status {
-    top: 70px;
-    right: 15px;
-    font-size: 0.7rem;
-    padding: 5px 10px;
+  .music-control i {
+    font-size: 1rem; /* Smaller on mobile */
   }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    background-position: center 40%; /* More shift up on mobile */
+  }
+  
   .hero-names {
     font-size: 2.8rem; /* Adjusted for small mobile */
     white-space: nowrap;
@@ -518,11 +501,12 @@ iframe {
     letter-spacing: 1px;
     white-space: nowrap;
     margin-bottom: 0.1rem;
+    text-transform: none;
   }
   
   .hero-date {
     font-size: 1rem; /* Adjusted for small mobile */
-    padding: 0.6rem 1.3rem;
+    padding: 0.2rem 0;
     margin-top: 4rem; /* Adjusted for small mobile */
     top: 100px; /* Adjusted for small mobile */
   }
@@ -541,10 +525,6 @@ iframe {
       font-size: 0.9rem;
     }
     
-    .hero-corner-text {
-      padding: 4px 8px;
-    }
-    
     .we-said-yes {
       font-size: 0.7rem;
     }
@@ -557,13 +537,13 @@ iframe {
   /* Mobile landscape/portrait adjustment */
   @media (orientation: portrait) {
     .hero {
-      background-position: center 30%;
+      background-position: center 35%;
     }
   }
   
   @media (orientation: landscape) {
     .hero {
-      background-position: center 25%;
+      background-position: center 30%;
     }
     
     .hero-content {
@@ -600,7 +580,6 @@ iframe {
   .hero-corner-text {
     bottom: 60px;
     right: 10px;
-    padding: 4px 8px;
   }
   
   .ar .hero-corner-text {
@@ -638,19 +617,16 @@ iframe {
   Your browser does not support the audio element.
 </audio>
 
-<!-- MUSIC CONTROL -->
+<!-- MUSIC CONTROL - SMALLER -->
 <div class="music-control" id="musicControl">
   <i class="fas fa-music"></i>
 </div>
 
-<!-- Music status indicator -->
-<div class="music-status" id="musicStatus"></div>
-
 <!-- HERO SECTION -->
 <section class="hero">
-  <!-- "We Said Yes!" Corner Text - SMALLER -->
+  <!-- "We said yes" Corner Text - NO TRANSLUCENT BACKGROUND, NO EXCLAMATION -->
   <div class="hero-corner-text">
-    <div class="we-said-yes" id="cornerText">We said yes!</div>
+    <div class="we-said-yes" id="cornerText">We said yes</div>
     <div class="corner-date" id="cornerDate">01/01/2026</div>
   </div>
   
@@ -675,7 +651,7 @@ iframe {
 
   <div class="details" id="details">
     April 10, 2026<br>
-    SUNSET – Wedding Garden<br>
+    Sunset Wedding Garden<br> <!-- CHANGED from SUNSET – Wedding Garden -->
     Abou Rawash, Kerdasa, Giza Governorate<br>
     Cairo-Egypt<br>
     <em>Outdoor Wedding</em>
@@ -705,41 +681,29 @@ iframe {
 
 <script>
 // ============================================
-// MUSIC PLAYER WITH YOUR DROPBOX MUSIC
+// MUSIC PLAYER WITH YOUR DROPBOX MUSIC - SIMPLIFIED
 // ============================================
 
 const music = document.getElementById('weddingMusic');
 const musicControl = document.getElementById('musicControl');
-const musicStatus = document.getElementById('musicStatus');
 const musicIcon = musicControl.querySelector('i');
 let isPlaying = false;
 
 // Set volume to 30%
 music.volume = 0.3;
 
-// Show initial status
-musicStatus.textContent = "Music ready";
-musicStatus.style.display = 'block';
-
 // Function to play music
 function playMusic() {
-  console.log("Playing music from Dropbox...");
-  
   music.play().then(() => {
-    console.log("Music started successfully");
     isPlaying = true;
     musicIcon.className = 'fas fa-pause';
     musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-    musicStatus.textContent = "Music playing";
-    musicStatus.style.background = 'rgba(138, 154, 139, 0.9)';
   }).catch(e => {
-    console.log("Dropbox music play failed:", e);
-    musicStatus.textContent = "Tap to play music";
-    musicStatus.style.background = 'rgba(138, 154, 139, 0.7)';
+    console.log("Music play failed:", e);
+    musicIcon.className = 'fas fa-music';
     
     // Try the backup source automatically
     if (e.name === 'NotSupportedError' || e.name === 'TypeError') {
-      console.log("Trying backup music source...");
       music.src = 'https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3';
       music.load();
       
@@ -749,7 +713,6 @@ function playMusic() {
           isPlaying = true;
           musicIcon.className = 'fas fa-pause';
           musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-          musicStatus.textContent = "Playing backup music";
         });
       }, 500);
     }
@@ -762,8 +725,6 @@ function pauseMusic() {
   isPlaying = false;
   musicIcon.className = 'fas fa-music';
   musicControl.style.background = 'rgba(255, 255, 255, 0.9)';
-  musicStatus.textContent = "Music paused";
-  musicStatus.style.background = 'rgba(138, 154, 139, 0.7)';
 }
 
 // Music control click handler
@@ -771,13 +732,6 @@ musicControl.addEventListener('click', function() {
   if (isPlaying) {
     pauseMusic();
   } else {
-    playMusic();
-  }
-});
-
-// Also allow clicking the status message
-musicStatus.addEventListener('click', function() {
-  if (!isPlaying) {
     playMusic();
   }
 });
@@ -795,30 +749,18 @@ window.addEventListener('load', function() {
   }
 });
 
-// Handle audio errors
-music.addEventListener('error', function(e) {
-  console.error("Music error:", e);
-  musicStatus.textContent = "Music loading...";
-});
-
-// When audio successfully loads
-music.addEventListener('loadeddata', function() {
-  console.log("Music loaded successfully");
-  musicStatus.textContent = "Music ready to play";
-});
-
 // ============================================
-// LANGUAGE CONTENT (UPDATED WITH EXCLAMATION MARK)
+// LANGUAGE CONTENT (UPDATED - NO EXCLAMATION, SUNSET FIXED)
 // ============================================
 const content = {
   en: {
     heroTitle: "Ehab & Radwa",
-    heroSubtitle: "We're getting married",
+    heroSubtitle: "We're getting married", // Not uppercase
     title: "Ehab & Radwa",
-    subtitle: "We're getting married",
-    details: "April 10, 2026<br>SUNSET – Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
+    subtitle: "We're getting married", // Not uppercase
+    details: "April 10, 2026<br>Sunset Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>", // CHANGED SUNSET
     message: "With great joy, we invite you to celebrate our wedding. Your presence means the world to us.",
-    cornerText: "We said yes!", // ADDED EXCLAMATION MARK
+    cornerText: "We said yes", // NO EXCLAMATION MARK
     cornerDate: "01/01/2026",
     guestText: "guests confirmed",
     directionsText: "Get Directions",
@@ -829,9 +771,9 @@ const content = {
     heroSubtitle: "يسعدنا دعوتكم لحفل زفافنا",
     title: "إيهاب ورضوى",
     subtitle: "يسعدنا دعوتكم لحفل زفافنا",
-    details: "10 أبريل 2026<br>سن ست - المنصوريه بارك<br>حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
+    details: "10 أبريل 2026<br>حديقة أفراح الغروب<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>", // Updated Arabic for Sunset
     message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
-    cornerText: "قلنا نعم!", // ADDED EXCLAMATION MARK IN ARABIC
+    cornerText: "قلنا نعم", // NO EXCLAMATION MARK IN ARABIC
     cornerDate: "٠١/٠١/٢٠٢٦",
     guestText: "ضيفاً أكدوا الحضور",
     directionsText: "احصل على الاتجاهات",
