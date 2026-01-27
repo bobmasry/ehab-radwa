@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -51,7 +51,7 @@ body::before {
     linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
     url('https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg');
   background-size: cover;
-  background-position: center 25%; /* SHIFTED IMAGE UP FROM 30% */
+  background-position: center 20%; /* SHIFTED IMAGE UP FURTHER FROM 25% TO 20% */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,7 +135,7 @@ body::before {
   font-style: italic;
 }
 
-/* HERO DATE - NO TRANSLUCENT BACKGROUND - SHIFTED UPWARDS */
+/* HERO DATE - SHIFTED DOWNWARDS FOR MOBILE */
 .hero-date {
   display: inline-block;
   /* REMOVED background, border, backdrop-filter, box-shadow */
@@ -144,9 +144,9 @@ body::before {
   font-size: 1.4rem; /* BIGGER font */
   color: white;
   letter-spacing: 2px;
-  margin-top: 5rem; /* RAISED FROM 7rem TO 5rem (HIGHER) */
+  margin-top: 7rem; /* INCREASED FROM 5rem TO 7rem (LOWER POSITION) */
   position: relative;
-  top: 120px; /* RAISED FROM 160px TO 120px (HIGHER) */
+  top: 140px; /* INCREASED FROM 120px TO 140px (LOWER POSITION) */
 }
 
 /* ===== MUSIC CONTROL - SMALLER ===== */
@@ -412,7 +412,7 @@ iframe {
 /* ===== RESPONSIVE - MOBILE FIXES ===== */
 @media (max-width: 768px) {
   .hero {
-    background-position: center 30%; /* Adjusted for mobile - SHIFTED UP */
+    background-position: center 25%; /* SHIFTED UP FURTHER FROM 30% TO 25% */
   }
   
   .hero-content {
@@ -435,11 +435,12 @@ iframe {
     text-transform: none; /* Ensure not uppercase on mobile */
   }
   
+  /* HERO DATE - SHIFTED DOWN FOR MOBILE */
   .hero-date {
     font-size: 1.2rem; /* Bigger font on mobile too */
     padding: 0.3rem 0;
-    margin-top: 3.5rem; /* ADJUSTED FOR MOBILE - SHIFTED UP */
-    top: 80px; /* ADJUSTED FOR MOBILE - SHIFTED UP */
+    margin-top: 4.5rem; /* INCREASED FROM 3.5rem TO 4.5rem (LOWER) */
+    top: 100px; /* INCREASED FROM 80px TO 100px (LOWER) */
   }
   
   .hero-corner-text {
@@ -487,7 +488,7 @@ iframe {
 
 @media (max-width: 480px) {
   .hero {
-    background-position: center 35%; /* More shift up on mobile */
+    background-position: center 30%; /* SHIFTED UP FROM 35% TO 30% */
   }
   
   .hero-names {
@@ -504,11 +505,12 @@ iframe {
     text-transform: none;
   }
   
+  /* HERO DATE - SHIFTED DOWN FOR SMALL MOBILE */
   .hero-date {
     font-size: 1rem; /* Adjusted for small mobile */
     padding: 0.2rem 0;
-    margin-top: 3rem; /* ADJUSTED FOR SMALL MOBILE - SHIFTED UP */
-    top: 60px; /* ADJUSTED FOR SMALL MOBILE - SHIFTED UP */
+    margin-top: 4rem; /* INCREASED FROM 3rem TO 4rem (LOWER) */
+    top: 80px; /* INCREASED FROM 60px TO 80px (LOWER) */
   }
   
   /* Prevent text wrapping on very small screens */
@@ -521,10 +523,11 @@ iframe {
       font-size: 0.9rem;
     }
     
+    /* HERO DATE - SHIFTED DOWN FOR VERY SMALL MOBILE */
     .hero-date {
       font-size: 0.9rem;
-      margin-top: 2.5rem; /* ADJUSTED FOR VERY SMALL MOBILE */
-      top: 50px; /* ADJUSTED FOR VERY SMALL MOBILE */
+      margin-top: 3.5rem; /* INCREASED FROM 2.5rem TO 3.5rem (LOWER) */
+      top: 70px; /* INCREASED FROM 50px TO 70px (LOWER) */
     }
     
     .we-said-yes {
@@ -539,13 +542,13 @@ iframe {
   /* Mobile landscape/portrait adjustment */
   @media (orientation: portrait) {
     .hero {
-      background-position: center 30%; /* SHIFTED UP */
+      background-position: center 25%; /* SHIFTED UP FROM 30% TO 25% */
     }
   }
   
   @media (orientation: landscape) {
     .hero {
-      background-position: center 25%; /* SHIFTED UP */
+      background-position: center 20%; /* SHIFTED UP FROM 25% TO 20% */
     }
     
     .hero-content {
@@ -560,10 +563,11 @@ iframe {
       font-size: 1.1rem;
     }
     
+    /* HERO DATE - SHIFTED DOWN FOR LANDSCAPE */
     .hero-date {
       font-size: 1.1rem;
-      margin-top: 2.5rem; /* ADJUSTED FOR LANDSCAPE */
-      top: 50px; /* ADJUSTED FOR LANDSCAPE */
+      margin-top: 3.5rem; /* INCREASED FROM 2.5rem TO 3.5rem (LOWER) */
+      top: 70px; /* INCREASED FROM 50px TO 70px (LOWER) */
     }
   }
   
