@@ -71,6 +71,24 @@ body::before {
   z-index: 0;
 }
 
+/* ===== TRANSPARENT LETTER SYMBOL ===== */
+.letter-symbol {
+  position: absolute;
+  top: 50px; /* Positioned at the top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px; /* Small size */
+  height: 120px; /* Small size */
+  background-image: url('https://image2url.com/r2/default/images/1769517557242-fa01b59f-329e-4a7b-b23d-6cc2a544399e.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.35; /* Transparent effect */
+  z-index: 1; /* Above the hero background but below content */
+  pointer-events: none; /* So it doesn't interfere with clicking */
+  filter: brightness(1.2) contrast(0.9); /* Lighten it up for better visibility */
+}
+
 /* "We said yes" Corner Text - NO TRANSLUCENT BACKGROUND */
 .hero-corner-text {
   position: absolute;
@@ -415,6 +433,13 @@ iframe {
     background-position: center 30%; /* Adjusted for mobile - SHIFTED UP */
   }
   
+  /* Adjust letter symbol for mobile */
+  .letter-symbol {
+    width: 90px; /* Smaller on mobile */
+    height: 90px; /* Smaller on mobile */
+    top: 40px; /* Adjusted position for mobile */
+  }
+  
   .hero-content {
     padding: 1.5rem;
     margin-top: -100px; /* Adjusted for mobile */
@@ -490,6 +515,13 @@ iframe {
     background-position: center 35%; /* More shift up on mobile */
   }
   
+  /* Further adjust letter symbol for small mobile */
+  .letter-symbol {
+    width: 70px; /* Even smaller on small mobile */
+    height: 70px; /* Even smaller on small mobile */
+    top: 30px; /* Adjusted position for small mobile */
+  }
+  
   .hero-names {
     font-size: 2.8rem; /* Adjusted for small mobile */
     white-space: nowrap;
@@ -534,6 +566,12 @@ iframe {
     .corner-date {
       font-size: 0.6rem;
     }
+    
+    .letter-symbol {
+      width: 60px; /* Smallest size */
+      height: 60px; /* Smallest size */
+      top: 25px; /* Adjusted position */
+    }
   }
   
   /* Mobile landscape/portrait adjustment */
@@ -564,6 +602,12 @@ iframe {
       font-size: 1.1rem;
       margin-top: 2.5rem; /* ADJUSTED FOR LANDSCAPE */
       top: 50px; /* ADJUSTED FOR LANDSCAPE */
+    }
+    
+    .letter-symbol {
+      width: 80px; /* Slightly larger in landscape */
+      height: 80px; /* Slightly larger in landscape */
+      top: 35px; /* Adjusted for landscape */
     }
   }
   
@@ -625,6 +669,9 @@ iframe {
 <div class="music-control" id="musicControl">
   <i class="fas fa-music"></i>
 </div>
+
+<!-- TRANSPARENT LETTER SYMBOL -->
+<div class="letter-symbol"></div>
 
 <!-- HERO SECTION -->
 <section class="hero">
@@ -775,7 +822,7 @@ const content = {
     heroSubtitle: "يسعدنا دعوتكم لحفل زفافنا",
     title: "إيهاب ورضوى",
     subtitle: "يسعدنا دعوتكم لحفل زفافنا",
-    details: "10 أبريل 2026<br>سن ست - المنصوريه بارك<br>حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
+    details: "10 أبريل 2026<br>سن ست - المنصوريه بارك حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
     message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
     cornerText: "قلنا نعم", // NO EXCLAMATION MARK IN ARABIC
     cornerDate: "٠١/٠١/٢٠٢٦",
