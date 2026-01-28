@@ -44,6 +44,23 @@ body::before {
   z-index: -1;
 }
 
+/* ===== TRANSLUCENT LOGO AT THE TOP ===== */
+.wedding-logo {
+  position: absolute;
+  top: 50px; /* Positioned at the top */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px; /* Medium size */
+  height: 150px; /* Medium size */
+  background-image: url('https://image2url.com/r2/default/images/1769611861904-fc591f88-a335-4db2-8e28-47e3497f12a3.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4; /* Translucent effect */
+  z-index: 3; /* Above the hero background and content */
+  pointer-events: none; /* So it doesn't interfere with clicking */
+}
+
 /* ===== HERO SECTION ===== */
 .hero {
   height: 100vh;
@@ -412,6 +429,13 @@ iframe {
 
 /* ===== RESPONSIVE - MOBILE FIXES ===== */
 @media (max-width: 768px) {
+  /* Adjust wedding logo for mobile */
+  .wedding-logo {
+    width: 120px; /* Smaller on tablet */
+    height: 120px; /* Smaller on tablet */
+    top: 40px; /* Adjusted position for tablet */
+  }
+  
   .hero {
     background-position: center 15%; /* SIGNIFICANTLY SHIFTED UP FROM 25% TO 15% */
     background-attachment: scroll; /* Better for mobile performance */
@@ -489,6 +513,13 @@ iframe {
 }
 
 @media (max-width: 480px) {
+  /* Further adjust wedding logo for small mobile */
+  .wedding-logo {
+    width: 100px; /* Even smaller on mobile */
+    height: 100px; /* Even smaller on mobile */
+    top: 30px; /* Adjusted position for mobile */
+  }
+  
   .hero {
     background-position: center 20%; /* SHIFTED UP FROM 30% TO 20% */
   }
@@ -517,6 +548,12 @@ iframe {
   
   /* Prevent text wrapping on very small screens */
   @media (max-width: 380px) {
+    .wedding-logo {
+      width: 80px; /* Smallest size */
+      height: 80px; /* Smallest size */
+      top: 25px; /* Adjusted position */
+    }
+    
     .hero-names {
       font-size: 2.3rem;
     }
@@ -549,6 +586,12 @@ iframe {
   }
   
   @media (orientation: landscape) {
+    .wedding-logo {
+      width: 110px; /* Slightly larger in landscape */
+      height: 110px; /* Slightly larger in landscape */
+      top: 35px; /* Adjusted for landscape */
+    }
+    
     .hero {
       background-position: center 10%; /* SHIFTED UP FROM 20% TO 10% */
     }
@@ -631,6 +674,9 @@ iframe {
 <div class="music-control" id="musicControl">
   <i class="fas fa-music"></i>
 </div>
+
+<!-- TRANSLUCENT WEDDING LOGO -->
+<div class="wedding-logo"></div>
 
 <!-- HERO SECTION -->
 <section class="hero">
