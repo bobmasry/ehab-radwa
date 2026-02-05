@@ -606,6 +606,85 @@ iframe {
     height: 550px;
   }
 }
+
+/* ===== GLITCH EFFECT STYLES ===== */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  2% {
+    transform: translate(-2px, 1px);
+    filter: hue-rotate(10deg) brightness(1.1) contrast(1.1);
+  }
+  4% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(-5deg) brightness(0.9) contrast(1.1);
+  }
+  6% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(5deg) brightness(1.05) contrast(0.95);
+  }
+  8% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  50% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  52% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(15deg) brightness(1.2) contrast(1.2);
+  }
+  54% {
+    transform: translate(-1px, 1px);
+    filter: hue-rotate(-10deg) brightness(0.8) contrast(1.1);
+  }
+  56% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(20deg) brightness(1.15) contrast(0.9);
+  }
+  58% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+}
+
+.glitch-active {
+  animation: glitch 0.5s linear infinite;
+  position: relative;
+}
+
+.glitch-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.7;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.glitch-active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.5;
+  mix-blend-mode: color-dodge;
+  z-index: 1;
+}
 </style>
 </head>
 
@@ -758,6 +837,102 @@ window.addEventListener('load', function() {
     }, 1500);
   }
 });
+
+// ============================================
+// GLITCH EFFECT - SIMPLE VERSION
+// ============================================
+
+// ============================================
+// ✅ YOUR FINAL URLs INSERTED HERE ✅
+// ============================================
+
+// GLITCH IMAGE (from Postimages.org - UK compatible)
+const glitchImageUrl = 'https://i.postimg.cc/MTy4GrhH/RE1.jpg';
+
+// GLITCH MUSIC (from Google Drive - direct download link)
+const glitchMusicUrl = 'https://drive.google.com/uc?export=download&id=1wIY7WgGM5R9kuqtq3VpqSXlp22cr6JQt';
+
+// ============================================
+// END OF CUSTOMIZATION - DON'T MODIFY BELOW
+// ============================================
+
+// Store original image
+const originalImage = "https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg";
+const hero = document.querySelector('.hero');
+
+let glitchActive = false;
+let glitchTimeout;
+
+function startGlitchEffect() {
+  if (glitchActive) return;
+  
+  glitchActive = true;
+  
+  // 1. Change hero image
+  hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${glitchImageUrl}')`;
+  
+  // 2. Add glitch animation class
+  hero.classList.add('glitch-active');
+  
+  // 3. Change music (only if music was playing)
+  if (!music.paused) {
+    const currentTime = music.currentTime;
+    music.pause();
+    music.src = glitchMusicUrl;
+    music.load();
+    music.currentTime = 0;
+    music.play().catch(e => console.log("Glitch music error:", e));
+    window.originalMusicTime = currentTime;
+    window.wasPlaying = true;
+  }
+  
+  console.log("🎭 Glitch ACTIVE - Image changed, music switched");
+  
+  // Deactivate after 20 seconds
+  glitchTimeout = setTimeout(() => {
+    stopGlitchEffect();
+  }, 20000);
+}
+
+function stopGlitchEffect() {
+  if (!glitchActive) return;
+  
+  glitchActive = false;
+  
+  // 1. Restore original image
+  hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${originalImage}')`;
+  
+  // 2. Remove glitch animation
+  hero.classList.remove('glitch-active');
+  
+  // 3. Restore original music if it was playing
+  if (window.wasPlaying) {
+    music.pause();
+    music.src = 'https://www.dropbox.com/scl/fi/fpfms7u1tzddtgw0f5dso/1-2.mp3?rlkey=qoy1dxmx0icqqbp9fu186l583&st=ywdfloyq&raw=1';
+    music.load();
+    
+    if (window.originalMusicTime) {
+      music.currentTime = window.originalMusicTime;
+    }
+    
+    setTimeout(() => {
+      music.play().catch(e => console.log("Restore music error:", e));
+    }, 500);
+  }
+  
+  console.log("🎭 Glitch INACTIVE - Back to normal");
+  
+  // Start next glitch in 30 seconds
+  setTimeout(() => {
+    startGlitchEffect();
+  }, 30000);
+}
+
+// Start the glitch cycle after 30 seconds
+setTimeout(() => {
+  startGlitchEffect();
+  console.log("⏰ Glitch cycle started - Will repeat every 50 seconds");
+}, 30000);
 
 // ============================================
 // LANGUAGE CONTENT (UPDATED - NO EXCLAMATION, SUNSET FIXED)
