@@ -876,6 +876,7 @@ function startGlitchEffect() {
   
   // 3. Change music (only if music was playing)
   if (!music.paused) {
+    window.originalMusicSrc = music.src; // Store the current source
     const currentTime = music.currentTime;
     music.pause();
     music.src = glitchMusicUrl;
@@ -906,9 +907,9 @@ function stopGlitchEffect() {
   hero.classList.remove('glitch-active');
   
   // 3. Restore original music if it was playing
-  if (window.wasPlaying) {
+  if (window.wasPlaying && window.originalMusicSrc) {
     music.pause();
-    music.src = 'https://www.dropbox.com/scl/fi/fpfms7u1tzddtgw0f5dso/1-2.mp3?rlkey=qoy1dxmx0icqqbp9fu186l583&st=ywdfloyq&raw=1';
+    music.src = window.originalMusicSrc; // Restore to whatever was playing
     music.load();
     
     if (window.originalMusicTime) {
