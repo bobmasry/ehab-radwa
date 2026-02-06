@@ -623,20 +623,16 @@ const carouselImages = [
   // Glitch image (second 10 seconds - GLITCH MUSIC & EFFECT)
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
   
-  // Third image (third 10 seconds - BACK TO NORMAL MUSIC)
+  // Third image (third 10 seconds - CONTINUE GLITCH MUSIC)
   "https://i.postimg.cc/cJDG4tYG/A0AF7014-1DBA-4E1A-838F-CC9150E6A78D.jpg",
   
-  // Fourth image (fourth 10 seconds - NORMAL MUSIC)
+  // Fourth image (fourth 10 seconds - CONTINUE GLITCH MUSIC)
   "https://i.postimg.cc/XYpwDT8w/BD07CF10-5A47-4190-910C-C22286D269B4.jpg"
 ];
 
-// Image descriptions (for debugging/console)
-const imageDescriptions = [
-  "Original Image",
-  "Glitch Image",
-  "Third Image (Beautiful)",
-  "Fourth Image (Elegant)"
-];
+// Track if glitch music has been activated in current cycle
+let glitchMusicActivated = false;
+let currentCycleStartTime = 0;
 
 // ============================================
 // MUSIC PLAYER SYSTEM
@@ -743,18 +739,36 @@ function changeHeroImage(index) {
   currentImageIndex = index;
   const imageUrl = carouselImages[index];
   
-  console.log(`🎨 Changing to image ${index + 1}/4: ${imageDescriptions[index]}`);
+  console.log(`🎨 Changing to image ${index + 1}/4`);
+  
+  // Check if we're at the start of a new cycle (image 0)
+  if (index === 0) {
+    // Reset glitch activation flag at start of new cycle
+    glitchMusicActivated = false;
+    console.log("🔄 New cycle started - resetting glitch flag");
+  }
   
   // Apply glitch effect ONLY for the glitch image (index 1)
   if (index === 1) {
     console.log("🎭 Activating glitch effect and music");
     hero.classList.add('glitch-active');
-    // Switch to glitch music
+    // Switch to glitch music and mark it as activated
     playGlitchMusic();
+    glitchMusicActivated = true;
   } else {
     hero.classList.remove('glitch-active');
-    // Switch to normal music for other images
-    playNormalMusic();
+    
+    // For images after glitch (2, 3), continue with glitch music if it was activated
+    if (index > 1 && glitchMusicActivated) {
+      console.log("🎵 Continuing glitch music for image", index + 1);
+      // Keep playing glitch music
+      if (currentMusic !== 'glitch') {
+        playGlitchMusic();
+      }
+    } else if (index === 0) {
+      // For first image, always use normal music
+      playNormalMusic();
+    }
   }
   
   // Update background image with smooth transition
@@ -767,6 +781,12 @@ function changeHeroImage(index) {
 // Go to specific image
 function goToImage(index) {
   clearInterval(carouselInterval);
+  
+  // If jumping to an image after glitch was activated, maintain glitch music
+  if (index > 1 && glitchMusicActivated) {
+    playGlitchMusic();
+  }
+  
   changeHeroImage(index);
   startCarousel();
 }
@@ -786,9 +806,8 @@ function startCarousel() {
 // ============================================
 window.addEventListener('load', function() {
   console.log("🚀 Wedding invitation loaded!");
-  console.log("📸 Carousel images:", carouselImages.length);
-  console.log("🔄 Pattern: Image 1 (Normal) → Image 2 (Glitch) → Image 3 (Normal) → Image 4 (Normal)");
-  console.log("🎵 Music: Normal for images 1,3,4 | Glitch for image 2");
+  console.log("📸 4-image carousel ready");
+  console.log("🎵 NEW PATTERN: Normal → Glitch → Continue Glitch → Continue Glitch");
   console.log("⏱️ Each image displays for 10 seconds");
   
   // Initialize carousel
