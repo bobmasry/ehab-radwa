@@ -175,15 +175,6 @@ body::before {
   color: var(--taupe);
 }
 
-.music-control.music-off {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(200, 169, 126, 0.2);
-}
-
-.music-control.music-off i {
-  color: rgba(166, 138, 111, 0.5);
-}
-
 /* ===== GLITCH EFFECT STYLES ===== */
 @keyframes glitch {
   0% {
@@ -593,53 +584,51 @@ iframe {
 // IMAGE CAROUSEL CONFIGURATION - OPTIMIZED FOR MOBILE
 // ============================================
 const carouselImages = [
-  // Original image (first 10 seconds)
+  // Original image (first 10 seconds - NORMAL MUSIC initially, then GLITCH)
   "https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg",
   
-  // Glitch image (second 10 seconds)
+  // Glitch image (second 10 seconds - GLITCH MUSIC & EFFECT)
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
   
-  // Third image - COMPRESSED VERSION for mobile
-  "https://i.postimg.cc/cJDG4tYG/A0AF7014-1DBA-4E1A-838F-CC9150E6A78D.jpg?format=webp&width=1200",
+  // Third image - OPTIMIZED URL for mobile
+  "https://i.postimg.cc/cJDG4tYG/A0AF7014-1DBA-4E1A-838F-CC9150E6A78D.jpg",
   
-  // Fourth image - COMPRESSED VERSION for mobile
-  "https://i.postimg.cc/XYpwDT8w/BD07CF10-5A47-4190-910C-C22286D269B4.jpg?format=webp&width=1200"
+  // Fourth image - OPTIMIZED URL for mobile
+  "https://i.postimg.cc/XYpwDT8w/BD07CF10-5A47-4190-910C-C22286D269B4.jpg"
 ];
 
-// Alternative: Even more compressed versions for mobile
-const mobileOptimizedImages = [
-  carouselImages[0],
-  carouselImages[1],
-  // Third image - ultra compressed for mobile
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  // Fourth image - ultra compressed for mobile
-  "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+// Alternative optimized URLs in case PostImage has issues
+const backupImages = [
+  carouselImages[0], // Keep original
+  carouselImages[1], // Keep glitch
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Backup 1
+  "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"  // Backup 2
 ];
+
+// Track if glitch music has started
+let glitchMusicStarted = false;
+let imagesLoaded = [false, false, false, false];
+let useBackupImages = false;
 
 // ============================================
-// MUSIC PLAYER SYSTEM - WITH PROPER TOGGLE
+// MUSIC PLAYER SYSTEM
 // ============================================
 const weddingMusic = document.getElementById('weddingMusic');
 const glitchMusic = document.getElementById('glitchMusic');
 const musicControl = document.getElementById('musicControl');
 const musicIcon = musicControl.querySelector('i');
-
-// State management
 let isPlaying = false;
-let glitchMusicStarted = false;
-let userStoppedMusic = false; // NEW: Track if user manually stopped music
 
 // Set volume to 30%
 weddingMusic.volume = 0.3;
 glitchMusic.volume = 0.3;
 
-// Play normal music (only for first 10 seconds if not stopped by user)
+// Play normal music (only for first 10 seconds)
 function playNormalMusic() {
-  if (!glitchMusicStarted && !userStoppedMusic) {
+  if (!glitchMusicStarted) {
     weddingMusic.play().then(() => {
       isPlaying = true;
       musicIcon.className = 'fas fa-pause';
-      musicControl.classList.remove('music-off');
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
     }).catch(e => {
       console.log("Normal music play failed:", e);
@@ -647,58 +636,29 @@ function playNormalMusic() {
   }
 }
 
-// Play glitch music (starts at 10 seconds, but respects user choice)
+// Play glitch music (starts at 10 seconds, continues forever)
 function playGlitchMusic() {
   glitchMusicStarted = true;
   
-  // Only play if user hasn't stopped the music
-  if (!userStoppedMusic) {
-    // Stop normal music if playing
-    weddingMusic.pause();
-    
-    glitchMusic.play().then(() => {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-pause';
-      musicControl.classList.remove('music-off');
-      musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-    }).catch(e => {
-      console.log("Glitch music play failed:", e);
-    });
-  }
+  // Stop normal music if playing
+  weddingMusic.pause();
+  
+  glitchMusic.play().then(() => {
+    isPlaying = true;
+    musicIcon.className = 'fas fa-pause';
+    musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+  }).catch(e => {
+    console.log("Glitch music play failed:", e);
+  });
 }
 
-// Pause both musics (when user manually stops)
+// Pause both musics
 function pauseMusic() {
   weddingMusic.pause();
   glitchMusic.pause();
   isPlaying = false;
-  userStoppedMusic = true; // Mark that user stopped music
   musicIcon.className = 'fas fa-music';
-  musicControl.classList.add('music-off');
-  musicControl.style.background = 'rgba(255, 255, 255, 0.8)';
-}
-
-// Resume music (when user manually starts)
-function resumeMusic() {
-  userStoppedMusic = false; // User wants music again
-  
-  if (glitchMusicStarted) {
-    // Resume glitch music if it was started
-    glitchMusic.play().then(() => {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-pause';
-      musicControl.classList.remove('music-off');
-      musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-    });
-  } else {
-    // Otherwise resume normal music
-    weddingMusic.play().then(() => {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-pause';
-      musicControl.classList.remove('music-off');
-      musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-    });
-  }
+  musicControl.style.background = 'rgba(255, 255, 255, 0.9)';
 }
 
 // Music control click handler
@@ -706,53 +666,96 @@ musicControl.addEventListener('click', function() {
   if (isPlaying) {
     pauseMusic();
   } else {
-    resumeMusic();
+    // Resume current music (glitch music if started, otherwise normal)
+    if (glitchMusicStarted) {
+      glitchMusic.play();
+    } else {
+      weddingMusic.play();
+    }
+    isPlaying = true;
+    musicIcon.className = 'fas fa-pause';
+    musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
   }
 });
 
 // ============================================
-// IMAGE CAROUSEL SYSTEM - SIMPLIFIED
+// IMAGE CAROUSEL SYSTEM - WITH BETTER MOBILE SUPPORT
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
 let carouselInterval;
 
-// Check if device is mobile
-const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-// Get appropriate image set for device
-function getImageSet() {
-  return isMobileDevice ? mobileOptimizedImages : carouselImages;
-}
-
-// Simple image loader
-function loadImage(url) {
+// Test if an image URL loads successfully
+function testImageLoad(url, index) {
   return new Promise((resolve) => {
     const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
+    img.onload = () => {
+      console.log(`✅ Image ${index + 1} loaded successfully: ${url.substring(0, 50)}...`);
+      imagesLoaded[index] = true;
+      resolve(true);
+    };
+    img.onerror = () => {
+      console.warn(`⚠️ Image ${index + 1} failed to load: ${url.substring(0, 50)}...`);
+      imagesLoaded[index] = false;
+      resolve(false);
+    };
     img.src = url;
+    
+    // Timeout after 5 seconds
+    setTimeout(() => {
+      if (!imagesLoaded[index]) {
+        console.warn(`⏱️ Image ${index + 1} load timeout: ${url.substring(0, 50)}...`);
+        resolve(false);
+      }
+    }, 5000);
   });
 }
 
-// Preload images
+// Preload all images with fallback
 async function preloadImages() {
-  console.log("📱 Device:", isMobileDevice ? "Mobile" : "Desktop");
+  console.log("🖼️ Preloading images...");
   
-  const imagesToLoad = getImageSet();
-  console.log("🖼️ Using", isMobileDevice ? "mobile-optimized" : "standard", "images");
+  // Try to load primary images
+  const loadPromises = carouselImages.map((url, index) => testImageLoad(url, index));
+  const results = await Promise.all(loadPromises);
   
-  for (let i = 0; i < imagesToLoad.length; i++) {
-    const loaded = await loadImage(imagesToLoad[i]);
-    console.log(`  Image ${i + 1}: ${loaded ? '✅' : '❌'}`);
+  // Check if any images failed
+  const failedImages = results.filter(success => !success).length;
+  
+  if (failedImages > 0) {
+    console.log(`⚠️ ${failedImages} images failed to load, trying backups...`);
+    
+    // Test backup images for failed ones
+    for (let i = 0; i < carouselImages.length; i++) {
+      if (!imagesLoaded[i] && i > 1) { // Only backup for images 3 and 4
+        const backupSuccess = await testImageLoad(backupImages[i], i);
+        if (backupSuccess) {
+          console.log(`✅ Using backup for image ${i + 1}`);
+          useBackupImages = true;
+        }
+      }
+    }
   }
+  
+  console.log("📊 Image loading summary:");
+  imagesLoaded.forEach((loaded, index) => {
+    console.log(`  Image ${index + 1}: ${loaded ? '✅ Loaded' : '❌ Failed'}`);
+  });
+}
+
+// Get the best available image URL
+function getImageUrl(index) {
+  if (useBackupImages && !imagesLoaded[index] && index > 1) {
+    console.log(`🔄 Using backup for image ${index + 1}`);
+    return backupImages[index];
+  }
+  return carouselImages[index];
 }
 
 // Change hero image
 function changeHeroImage(index) {
   currentImageIndex = index;
-  const images = getImageSet();
-  const imageUrl = images[index];
+  const imageUrl = getImageUrl(index);
   
   console.log(`🎨 Changing to image ${index + 1}/4`);
   
@@ -762,8 +765,7 @@ function changeHeroImage(index) {
     hero.classList.add('glitch-active');
     
     // Start glitch music at the same time as glitch image
-    // BUT respect user's choice if they stopped music
-    if (!glitchMusicStarted && !userStoppedMusic) {
+    if (!glitchMusicStarted) {
       console.log("🎵 Starting glitch music");
       playGlitchMusic();
     }
@@ -771,14 +773,24 @@ function changeHeroImage(index) {
     hero.classList.remove('glitch-active');
   }
   
-  // Update background image
+  // For all images after glitch starts, ensure glitch music continues
+  if (glitchMusicStarted && index !== 1) {
+    console.log("🎵 Continuing glitch music");
+    if (!isPlaying) {
+      glitchMusic.play();
+      isPlaying = true;
+      musicIcon.className = 'fas fa-pause';
+      musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+    }
+  }
+  
+  // Update background image with smooth transition
   hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
   
-  // Fix for mobile rendering
-  if (isMobileDevice) {
-    hero.style.backgroundSize = 'cover';
-    hero.style.backgroundPosition = 'center center';
-  }
+  // Force a redraw for mobile browsers
+  hero.style.display = 'none';
+  hero.offsetHeight; // Trigger reflow
+  hero.style.display = 'flex';
 }
 
 // Start automatic carousel
@@ -786,7 +798,7 @@ function startCarousel() {
   clearInterval(carouselInterval);
   
   carouselInterval = setInterval(() => {
-    currentImageIndex = (currentImageIndex + 1) % getImageSet().length;
+    currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
     changeHeroImage(currentImageIndex);
   }, 10000); // Change every 10 seconds
 }
@@ -797,40 +809,37 @@ function startCarousel() {
 window.addEventListener('load', async function() {
   console.log("🚀 Wedding invitation loaded!");
   console.log("📸 4-image carousel ready");
-  console.log("🎵 PATTERN: Normal → Glitch → Glitch continues → Glitch continues → Glitch continues");
-  console.log("🎵 MUSIC CONTROL: User can stop/start anytime, music won't auto-restart");
+  console.log("🎵 PATTERN: Normal → Glitch → Glitch continues → Glitch continues → Glitch continues (forever)");
   console.log("⏱️ Each image displays for 10 seconds");
   
-  // Preload images
+  // Preload images with fallback support
   await preloadImages();
   
   // Initialize with first image
   changeHeroImage(0);
   
-  // Start normal music on desktop (unless user stops it later)
-  if (!isMobileDevice) {
+  // Start normal music on desktop
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile) {
     setTimeout(() => {
-      if (!userStoppedMusic) {
-        playNormalMusic();
-        console.log("🎵 Auto-playing normal music on desktop");
-      }
+      playNormalMusic();
+      console.log("🎵 Auto-playing normal music on desktop");
     }, 1500);
   } else {
-    console.log("📱 Mobile: Music requires user interaction");
+    console.log("📱 Mobile device detected - music will start on user interaction");
     
-    // One-time touch listener for mobile music start
-    const startOnInteraction = () => {
-      if (!userStoppedMusic && !glitchMusicStarted) {
+    // For mobile, we need user interaction first
+    // Add a one-time touch listener to start music
+    const startMusicOnTouch = () => {
+      if (!glitchMusicStarted) {
         playNormalMusic();
-        console.log("🎵 Music started by user interaction");
       }
-      // Remove listeners after first interaction
-      document.removeEventListener('touchstart', startOnInteraction);
-      document.removeEventListener('click', startOnInteraction);
+      document.removeEventListener('touchstart', startMusicOnTouch);
+      document.removeEventListener('click', startMusicOnTouch);
     };
     
-    document.addEventListener('touchstart', startOnInteraction, { once: true });
-    document.addEventListener('click', startOnInteraction, { once: true });
+    document.addEventListener('touchstart', startMusicOnTouch, { once: true });
+    document.addEventListener('click', startMusicOnTouch, { once: true });
   }
   
   // Start carousel after initial delay
