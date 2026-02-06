@@ -44,7 +44,7 @@ body::before {
   z-index: -1;
 }
 
-/* ===== HERO SECTION WITH BETTER TRANSITIONS ===== */
+/* ===== HERO SECTION WITH CONSISTENT TRANSITIONS ===== */
 .hero {
   height: 100vh;
   background-size: cover;
@@ -56,27 +56,9 @@ body::before {
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: background-image 0.8s ease-in-out;
 }
 
-/* Fade overlay for smoother transitions */
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-  pointer-events: none;
-}
-
-.hero.changing::after {
-  opacity: 1;
-}
-
+/* Simple overlay that's always there */
 .hero::before {
   content: "";
   position: absolute;
@@ -464,6 +446,16 @@ iframe {
   animation: float 4s ease-in-out infinite;
 }
 
+/* Smooth fade transition for images */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.image-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero {
@@ -604,7 +596,7 @@ iframe {
 
 <script>
 // ============================================
-// IMAGE CAROUSEL CONFIGURATION - SWAPPED 3 & 4
+// IMAGE CAROUSEL CONFIGURATION - ORIGINAL ORDER
 // ============================================
 const carouselImages = [
   // Image 1: Original elegant photo
@@ -613,14 +605,14 @@ const carouselImages = [
   // Image 2: Glitch photo
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
   
-  // Image 3: SWAPPED - Now the 4th image (elegant couple)
+  // Image 3: Elegant couple photo (ORIGINAL - not swapped)
   "https://image2url.com/r2/default/images/1770392971859-6095db24-5bef-4f25-85e9-877b5f9af921.jpeg",
   
-  // Image 4: SWAPPED - Now the 3rd image (romantic silhouette)
+  // Image 4: Romantic silhouette photo (ORIGINAL - not swapped)
   "https://image2url.com/r2/default/images/1770392899407-3eb14233-ed41-4d77-9310-7fa9270af9e7.jpeg"
 ];
 
-// Track loaded images to prevent blanks
+// Track loaded images
 const loadedImages = {};
 
 // ============================================
@@ -695,15 +687,14 @@ musicControl.addEventListener('click', function() {
 });
 
 // ============================================
-// IMPROVED IMAGE CAROUSEL WITH BETTER LOADING
+// SIMPLE IMAGE CAROUSEL WITH CLEAN TRANSITIONS
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
 let carouselInterval;
-let nextImageIndex = 1; // Track next image for preloading
 
 // Preload an image
-function preloadImage(url, index) {
+function preloadImage(url) {
   return new Promise((resolve) => {
     if (loadedImages[url]) {
       resolve(true);
@@ -720,41 +711,10 @@ function preloadImage(url, index) {
   });
 }
 
-// Preload next image in sequence
-function preloadNextImage() {
-  const nextIndex = (currentImageIndex + 1) % carouselImages.length;
-  const nextUrl = carouselImages[nextIndex];
-  
-  if (!loadedImages[nextUrl]) {
-    preloadImage(nextUrl, nextIndex);
-  }
-}
-
-// Change image with smooth transition
+// Simple image change with clean fade
 function changeHeroImage(index) {
-  const imageUrl = carouselImages[index];
-  
-  // Show loading overlay
-  hero.classList.add('changing');
-  
-  // Check if image is already loaded
-  if (loadedImages[imageUrl]) {
-    // Image is ready, apply immediately
-    applyImageChange(index, imageUrl);
-  } else {
-    // Wait for image to load
-    preloadImage(imageUrl, index).then(() => {
-      applyImageChange(index, imageUrl);
-    });
-  }
-  
-  // Preload the next image
-  preloadNextImage();
-}
-
-// Apply the actual image change
-function applyImageChange(index, imageUrl) {
   currentImageIndex = index;
+  const imageUrl = carouselImages[index];
   
   // Glitch effect only on second image
   if (index === 1) {
@@ -767,12 +727,13 @@ function applyImageChange(index, imageUrl) {
     hero.classList.remove('glitch-active');
   }
   
-  // Update background
+  // Apply image with simple transition
   hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
   
-  // Remove loading overlay after transition
+  // Add fade-in class for smooth transition
+  hero.classList.add('image-fade-in');
   setTimeout(() => {
-    hero.classList.remove('changing');
+    hero.classList.remove('image-fade-in');
   }, 800);
 }
 
@@ -787,17 +748,21 @@ function startCarousel() {
 }
 
 // ============================================
-// INITIALIZE - WITH BETTER IMAGE LOADING
+// INITIALIZE
 // ============================================
 window.addEventListener('load', async function() {
-  console.log("🚀 Starting wedding invitation...");
+  console.log("🚀 Wedding invitation starting...");
   
-  // Preload first two images immediately
-  await preloadImage(carouselImages[0], 0);
-  await preloadImage(carouselImages[1], 1);
+  // Preload first image immediately
+  await preloadImage(carouselImages[0]);
   
   // Start with first image
   changeHeroImage(0);
+  
+  // Preload other images in background
+  for (let i = 1; i < carouselImages.length; i++) {
+    preloadImage(carouselImages[i]);
+  }
   
   // Try to play normal music on desktop
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -808,7 +773,7 @@ window.addEventListener('load', async function() {
   // Start carousel after 10 seconds
   setTimeout(() => {
     startCarousel();
-    console.log("🔄 Carousel started with swapped images 3 & 4");
+    console.log("🔄 Carousel started with clean fade transitions");
   }, 10000);
 });
 
