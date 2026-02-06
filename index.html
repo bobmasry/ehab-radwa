@@ -513,6 +513,11 @@ iframe {
 </head>
 
 <body>
+<!-- SILENT AUDIO TO UNLOCK AUTOPLAY ON MOBILE (HIDDEN) -->
+<audio id="silentAudio" loop volume="0" style="display: none;">
+  <source src="https://assets.mixkit.co/music/preview/mixkit-game-show-suspense-waiting-667.mp3" type="audio/mpeg">
+</audio>
+
 <!-- BACKGROUND MUSIC - SEPARATE PLAYERS -->
 <audio id="weddingMusic" loop volume="0.3">
   <!-- YOUR ORIGINAL MUSIC -->
@@ -590,7 +595,7 @@ iframe {
 
 <script>
 // ============================================
-// IMAGE CAROUSEL CONFIGURATION - ALL FROM IMAGE2URL
+// IMAGE CAROUSEL CONFIGURATION
 // ============================================
 const carouselImages = [
   // Original image (first 10 seconds)
@@ -607,6 +612,39 @@ const carouselImages = [
 ];
 
 // ============================================
+// AUTOPLAY UNLOCK FOR MOBILE
+// ============================================
+const silentAudio = document.getElementById('silentAudio');
+silentAudio.volume = 0;
+
+// Function to unlock audio autoplay
+function unlockAudioAutoplay() {
+  console.log("🔓 Attempting to unlock audio autoplay...");
+  
+  // Try to play silent audio immediately
+  silentAudio.play().then(() => {
+    console.log("✅ Audio autoplay unlocked successfully");
+    silentAudio.pause();
+  }).catch(error => {
+    console.log("⚠️ Silent audio autoplay failed:", error.name);
+    
+    // If failed, try with user interaction
+    const unlockOnInteraction = () => {
+      silentAudio.play().then(() => {
+        console.log("✅ Audio autoplay unlocked via user interaction");
+        silentAudio.pause();
+      }).finally(() => {
+        document.removeEventListener('click', unlockOnInteraction);
+        document.removeEventListener('touchstart', unlockOnInteraction);
+      });
+    };
+    
+    document.addEventListener('click', unlockOnInteraction, { once: true });
+    document.addEventListener('touchstart', unlockOnInteraction, { once: true });
+  });
+}
+
+// ============================================
 // MUSIC PLAYER SYSTEM
 // ============================================
 const weddingMusic = document.getElementById('weddingMusic');
@@ -618,12 +656,16 @@ const musicIcon = musicControl.querySelector('i');
 let isPlaying = false;
 let glitchMusicStarted = false;
 let userStoppedMusic = false;
+let audioUnlocked = false;
 
 // Set volume to 30%
 weddingMusic.volume = 0.3;
 glitchMusic.volume = 0.3;
 
-// Play normal music (only for first 10 seconds if not stopped by user)
+// Check if device is mobile
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Play normal music
 function playNormalMusic() {
   if (!glitchMusicStarted && !userStoppedMusic) {
     weddingMusic.play().then(() => {
@@ -631,13 +673,14 @@ function playNormalMusic() {
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+      console.log("🎵 Normal music started");
     }).catch(e => {
-      console.log("Normal music play failed:", e);
+      console.log("Normal music play failed:", e.name);
     });
   }
 }
 
-// Play glitch music (starts at 10 seconds, but respects user choice)
+// Play glitch music (starts at 10 seconds)
 function playGlitchMusic() {
   glitchMusicStarted = true;
   
@@ -651,8 +694,17 @@ function playGlitchMusic() {
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+      console.log("🎵 Glitch music started automatically");
     }).catch(e => {
-      console.log("Glitch music play failed:", e);
+      console.log("Glitch music auto-play failed:", e.name);
+      // Try one more time after a short delay
+      setTimeout(() => {
+        if (!userStoppedMusic) {
+          glitchMusic.play().then(() => {
+            console.log("🎵 Glitch music started on second attempt");
+          });
+        }
+      }, 500);
     });
   }
 }
@@ -666,6 +718,7 @@ function pauseMusic() {
   musicIcon.className = 'fas fa-music';
   musicControl.classList.add('music-off');
   musicControl.style.background = 'rgba(255, 255, 255, 0.8)';
+  console.log("⏸️ Music stopped by user");
 }
 
 // Resume music (when user manually starts)
@@ -679,6 +732,7 @@ function resumeMusic() {
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+      console.log("▶️ Glitch music resumed by user");
     });
   } else {
     // Otherwise resume normal music
@@ -687,6 +741,7 @@ function resumeMusic() {
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
       musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+      console.log("▶️ Normal music resumed by user");
     });
   }
 }
@@ -701,7 +756,7 @@ musicControl.addEventListener('click', function() {
 });
 
 // ============================================
-// IMAGE CAROUSEL SYSTEM - SIMPLIFIED
+// IMAGE CAROUSEL SYSTEM
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
@@ -711,30 +766,19 @@ let carouselInterval;
 function loadImage(url) {
   return new Promise((resolve) => {
     const img = new Image();
-    img.onload = () => {
-      console.log(`✅ Image loaded: ${url.substring(0, 60)}...`);
-      resolve(true);
-    };
-    img.onerror = () => {
-      console.warn(`❌ Failed to load: ${url.substring(0, 60)}...`);
-      resolve(false);
-    };
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
     img.src = url;
   });
 }
 
-// Preload all images
+// Preload images
 async function preloadImages() {
-  console.log("🖼️ Preloading all images from Image2URL...");
+  console.log("📱 Device:", isMobileDevice ? "Mobile" : "Desktop");
   
-  const loadPromises = carouselImages.map((url, index) => loadImage(url));
-  const results = await Promise.all(loadPromises);
-  
-  const successCount = results.filter(success => success).length;
-  console.log(`📊 ${successCount}/${carouselImages.length} images loaded successfully`);
-  
-  if (successCount < carouselImages.length) {
-    console.warn("⚠️ Some images failed to preload. They may still load when displayed.");
+  for (let i = 0; i < carouselImages.length; i++) {
+    const loaded = await loadImage(carouselImages[i]);
+    console.log(`  Image ${i + 1}: ${loaded ? '✅' : '❌'}`);
   }
 }
 
@@ -750,10 +794,9 @@ function changeHeroImage(index) {
     console.log("🎭 Activating glitch effect");
     hero.classList.add('glitch-active');
     
-    // Start glitch music at the same time as glitch image
-    // BUT respect user's choice if they stopped music
+    // CRITICAL: Start glitch music automatically when glitch image appears
     if (!glitchMusicStarted && !userStoppedMusic) {
-      console.log("🎵 Starting glitch music");
+      console.log("🎵 Attempting to start glitch music automatically");
       playGlitchMusic();
     }
   } else {
@@ -784,10 +827,13 @@ function startCarousel() {
 // ============================================
 window.addEventListener('load', async function() {
   console.log("🚀 Wedding invitation loaded!");
-  console.log("📸 4-image carousel ready (ALL from Image2URL)");
-  console.log("🎵 PATTERN: Normal → Glitch → Glitch continues → Glitch continues → Glitch continues");
-  console.log("🎵 MUSIC CONTROL: User can stop/start anytime, music won't auto-restart");
+  console.log("📸 4-image carousel ready");
+  console.log("🎵 PATTERN: Normal → Glitch (auto) → Glitch continues → Glitch continues → Glitch continues");
+  console.log("🎵 MOBILE FIX: Using silent audio to unlock autoplay");
   console.log("⏱️ Each image displays for 10 seconds");
+  
+  // Unlock audio autoplay first (especially important for mobile)
+  unlockAudioAutoplay();
   
   // Preload images
   await preloadImages();
@@ -795,11 +841,8 @@ window.addEventListener('load', async function() {
   // Initialize with first image
   changeHeroImage(0);
   
-  // Check if mobile
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  // Start normal music on desktop (unless user stops it later)
-  if (!isMobile) {
+  // Start normal music (on desktop it should work, on mobile it might fail)
+  if (!isMobileDevice) {
     setTimeout(() => {
       if (!userStoppedMusic) {
         playNormalMusic();
@@ -807,26 +850,22 @@ window.addEventListener('load', async function() {
       }
     }, 1500);
   } else {
-    console.log("📱 Mobile device detected");
+    console.log("📱 Mobile: Will attempt to play glitch music automatically at 10 seconds");
     
-    // For mobile, require user interaction for music
-    const startOnInteraction = () => {
-      if (!userStoppedMusic && !glitchMusicStarted) {
-        playNormalMusic();
-        console.log("🎵 Music started by user interaction");
+    // On mobile, we might skip normal music but glitch should play at 10s
+    // The silent audio unlock should help with this
+    setTimeout(() => {
+      if (!userStoppedMusic) {
+        playNormalMusic(); // Try but might fail
       }
-      document.removeEventListener('touchstart', startOnInteraction);
-      document.removeEventListener('click', startOnInteraction);
-    };
-    
-    document.addEventListener('touchstart', startOnInteraction, { once: true });
-    document.addEventListener('click', startOnInteraction, { once: true });
+    }, 1500);
   }
   
   // Start carousel after initial delay
   setTimeout(() => {
     startCarousel();
     console.log("🔄 Carousel started - rotating every 10 seconds");
+    console.log("⏰ Glitch music should start automatically in 10 seconds");
   }, 10000); // First change after 10 seconds
 });
 
