@@ -47,18 +47,16 @@ body::before {
 /* ===== HERO SECTION ===== */
 .hero {
   height: 100vh;
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-    url('https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg');
   background-size: cover;
-  background-position: center 10%; /* SIGNIFICANTLY SHIFTED IMAGE UP FROM 25% TO 10% */
-  background-attachment: fixed; /* Makes the zoom effect more noticeable */
+  background-position: center 10%;
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
   overflow: hidden;
+  transition: background-image 1s ease-in-out;
 }
 
 .hero::before {
@@ -72,7 +70,7 @@ body::before {
   z-index: 0;
 }
 
-/* "We said yes" Corner Text - NO TRANSLUCENT BACKGROUND */
+/* "We said yes" Corner Text */
 .hero-corner-text {
   position: absolute;
   bottom: 80px;
@@ -81,7 +79,6 @@ body::before {
   color: rgba(255, 255, 255, 0.95);
   font-family: 'Playfair Display', serif;
   z-index: 2;
-  /* REMOVED background, backdrop-filter, border, box-shadow */
 }
 
 .we-said-yes {
@@ -97,7 +94,7 @@ body::before {
   letter-spacing: 1.5px;
 }
 
-/* HERO CONTENT - RAISED HIGHER */
+/* HERO CONTENT */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -106,15 +103,15 @@ body::before {
   animation: fadeUp 1.6s ease-out;
   margin: 0 20px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  margin-top: -120px; /* RAISED FROM -100px TO -120px */
+  margin-top: -120px;
 }
 
-/* Ehab & Radwa - SMALLER FONT as requested */
+/* Ehab & Radwa */
 .hero-names {
   font-family: 'Playfair Display', serif;
-  font-size: 4.8rem; /* SMALLER from 5.5rem */
+  font-size: 4.8rem;
   color: white;
-  margin: 0 0 0.1rem 0; /* Reduced margin to bring subtitle closer */
+  margin: 0 0 0.1rem 0;
   font-weight: 600;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -124,41 +121,40 @@ body::before {
   text-overflow: ellipsis;
 }
 
-/* We're getting married - SMALL CAPS (not all caps) */
+/* We're getting married */
 .hero-subtitle {
   font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
   letter-spacing: 2.5px;
-  margin-bottom: 0.2rem; /* Reduced margin to be closer to names */
-  text-transform: none; /* CHANGED from uppercase to none */
+  margin-bottom: 0.2rem;
+  text-transform: none;
   white-space: nowrap;
   font-style: italic;
 }
 
-/* HERO DATE - RAISED SLIGHTLY UP FROM PREVIOUS POSITION */
+/* HERO DATE */
 .hero-date {
   display: inline-block;
-  /* REMOVED background, border, backdrop-filter, box-shadow */
-  padding: 0.5rem 0; /* Simplified padding */
-  border-radius: 0; /* Removed rounded corners */
-  font-size: 1.4rem; /* BIGGER font */
+  padding: 0.5rem 0;
+  border-radius: 0;
+  font-size: 1.4rem;
   color: white;
   letter-spacing: 2px;
-  margin-top: 10rem; /* RAISED FROM 12rem TO 10rem (SLIGHTLY HIGHER) */
+  margin-top: 10rem;
   position: relative;
-  top: 200px; /* RAISED FROM 240px TO 200px (SLIGHTLY HIGHER) */
+  top: 200px;
 }
 
-/* ===== MUSIC CONTROL - SMALLER ===== */
+/* ===== MUSIC CONTROL ===== */
 .music-control {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
-  width: 40px; /* SMALLER */
-  height: 40px; /* SMALLER */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -175,11 +171,67 @@ body::before {
 }
 
 .music-control i {
-  font-size: 1.1rem; /* SMALLER icon */
+  font-size: 1.1rem;
   color: var(--taupe);
 }
 
-/* REMOVED music-status class entirely */
+/* ===== GLITCH EFFECT STYLES ===== */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  2% {
+    transform: translate(-2px, 1px);
+    filter: hue-rotate(10deg) brightness(1.1) contrast(1.1);
+  }
+  4% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(-5deg) brightness(0.9) contrast(1.1);
+  }
+  6% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(5deg) brightness(1.05) contrast(0.95);
+  }
+  8% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg) brightness(1) contrast(1);
+  }
+}
+
+.glitch-active {
+  animation: glitch 0.5s linear infinite;
+  position: relative;
+}
+
+/* ===== IMAGE CAROUSEL INDICATORS ===== */
+.carousel-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
 
 /* ===== MAIN CARD ===== */
 .wrapper {
@@ -197,7 +249,7 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-/* Olive decorations - Enhanced */
+/* Olive decorations */
 .wrapper::before,
 .wrapper::after {
   content: "";
@@ -410,52 +462,38 @@ iframe {
   animation: float 4s ease-in-out infinite;
 }
 
-/* ===== RESPONSIVE - MOBILE FIXES ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero {
-    background-position: center 15%; /* SIGNIFICANTLY SHIFTED UP FROM 25% TO 15% */
-    background-attachment: scroll; /* Better for mobile performance */
+    background-attachment: scroll;
   }
   
   .hero-content {
     padding: 1.5rem;
-    margin-top: -100px; /* Adjusted for mobile */
+    margin-top: -100px;
   }
   
   .hero-names {
-    font-size: 3.5rem; /* Adjusted for mobile */
-    white-space: nowrap;
-    letter-spacing: 0.5px;
-    margin: 0 0 0.05rem 0; /* Even closer on mobile */
+    font-size: 3.5rem;
   }
   
   .hero-subtitle {
     font-size: 1.3rem;
-    letter-spacing: 1.5px;
-    white-space: nowrap;
-    margin-bottom: 0.1rem; /* Even closer on mobile */
-    text-transform: none; /* Ensure not uppercase on mobile */
   }
   
-  /* HERO DATE - RAISED SLIGHTLY UP FOR MOBILE */
   .hero-date {
-    font-size: 1.2rem; /* Bigger font on mobile too */
-    padding: 0.3rem 0;
-    margin-top: 7rem; /* RAISED FROM 8rem TO 7rem (SLIGHTLY HIGHER) */
-    top: 140px; /* RAISED FROM 160px TO 140px (SLIGHTLY HIGHER) */
+    font-size: 1.2rem;
+    margin-top: 7rem;
+    top: 140px;
   }
   
-  .hero-corner-text {
-    bottom: 70px;
-    right: 15px;
+  .carousel-indicators {
+    bottom: 20px;
   }
   
-  .we-said-yes {
-    font-size: 0.75rem; /* Smaller on mobile */
-  }
-  
-  .corner-date {
-    font-size: 0.65rem; /* Smaller on mobile */
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
   }
   
   .wrapper {
@@ -463,260 +501,66 @@ iframe {
     padding: 30px 20px;
   }
   
-  h1 {
-    font-size: 32px;
-  }
-  
-  .subtitle {
-    font-size: 16px;
-  }
-  
-  .buttons a {
-    padding: 12px 24px;
-    min-width: 160px;
-  }
-  
   .music-control {
     top: 15px;
     right: 15px;
-    width: 35px; /* Smaller on mobile */
-    height: 35px; /* Smaller on mobile */
-  }
-  
-  .music-control i {
-    font-size: 1rem; /* Smaller on mobile */
+    width: 35px;
+    height: 35px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero {
-    background-position: center 20%; /* SHIFTED UP FROM 30% TO 20% */
-  }
-  
   .hero-names {
-    font-size: 2.8rem; /* Adjusted for small mobile */
-    white-space: nowrap;
-    margin: 0 0 0.05rem 0;
+    font-size: 2.8rem;
   }
   
   .hero-subtitle {
     font-size: 1rem;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    margin-bottom: 0.1rem;
-    text-transform: none;
   }
   
-  /* HERO DATE - RAISED SLIGHTLY UP FOR SMALL MOBILE */
   .hero-date {
-    font-size: 1rem; /* Adjusted for small mobile */
-    padding: 0.2rem 0;
-    margin-top: 6rem; /* RAISED FROM 7rem TO 6rem (SLIGHTLY HIGHER) */
-    top: 120px; /* RAISED FROM 140px TO 120px (SLIGHTLY HIGHER) */
+    font-size: 1rem;
+    margin-top: 6rem;
+    top: 120px;
   }
   
-  /* Prevent text wrapping on very small screens */
-  @media (max-width: 380px) {
-    .hero-names {
-      font-size: 2.3rem;
-    }
-    
-    .hero-subtitle {
-      font-size: 0.9rem;
-    }
-    
-    /* HERO DATE - RAISED SLIGHTLY UP FOR VERY SMALL MOBILE */
-    .hero-date {
-      font-size: 0.9rem;
-      margin-top: 5rem; /* RAISED FROM 6rem TO 5rem (SLIGHTLY HIGHER) */
-      top: 100px; /* RAISED FROM 120px TO 100px (SLIGHTLY HIGHER) */
-    }
-    
-    .we-said-yes {
-      font-size: 0.7rem;
-    }
-    
-    .corner-date {
-      font-size: 0.6rem;
-    }
+  .carousel-indicators {
+    bottom: 15px;
   }
-  
-  /* Mobile landscape/portrait adjustment */
-  @media (orientation: portrait) {
-    .hero {
-      background-position: center 15%; /* SHIFTED UP FROM 25% TO 15% */
-    }
-  }
-  
-  @media (orientation: landscape) {
-    .hero {
-      background-position: center 10%; /* SHIFTED UP FROM 20% TO 10% */
-    }
-    
-    .hero-content {
-      margin-top: -80px; /* ADJUSTED */
-    }
-    
-    .hero-names {
-      font-size: 3rem;
-    }
-    
-    .hero-subtitle {
-      font-size: 1.1rem;
-    }
-    
-    /* HERO DATE - RAISED SLIGHTLY UP FOR LANDSCAPE */
-    .hero-date {
-      font-size: 1.1rem;
-      margin-top: 5rem; /* RAISED FROM 6rem TO 5rem (SLIGHTLY HIGHER) */
-      top: 100px; /* RAISED FROM 120px TO 100px (SLIGHTLY HIGHER) */
-    }
-  }
-  
-  .wrapper {
-    padding: 25px 18px;
-    margin: -40px auto 30px;
-  }
-  
-  .divider {
-    margin: 20px auto;
-  }
-  
-  .lang button {
-    padding: 8px 16px;
-    margin: 0 4px;
-  }
-  
-  .hero-corner-text {
-    bottom: 60px;
-    right: 10px;
-  }
-  
-  .ar .hero-corner-text {
-    left: 10px;
-  }
-  
-  .hero-content {
-    padding: 1rem;
-    margin: 0 10px;
-    margin-top: -80px; /* ADJUSTED */
-  }
-  
-  iframe {
-    height: 550px;
-  }
-}
-
-/* ===== GLITCH EFFECT STYLES ===== */
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  2% {
-    transform: translate(-2px, 1px);
-    filter: hue-rotate(10deg) brightness(1.1) contrast(1.1);
-  }
-  4% {
-    transform: translate(1px, -1px);
-    filter: hue-rotate(-5deg) brightness(0.9) contrast(1.1);
-  }
-  6% {
-    transform: translate(-1px, 2px);
-    filter: hue-rotate(5deg) brightness(1.05) contrast(0.95);
-  }
-  8% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  50% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  52% {
-    transform: translate(1px, -1px);
-    filter: hue-rotate(15deg) brightness(1.2) contrast(1.2);
-  }
-  54% {
-    transform: translate(-1px, 1px);
-    filter: hue-rotate(-10deg) brightness(0.8) contrast(1.1);
-  }
-  56% {
-    transform: translate(2px, -2px);
-    filter: hue-rotate(20deg) brightness(1.15) contrast(0.9);
-  }
-  58% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  100% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-}
-
-.glitch-active {
-  animation: glitch 0.5s linear infinite;
-  position: relative;
-}
-
-.glitch-active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: inherit;
-  opacity: 0.7;
-  mix-blend-mode: overlay;
-  z-index: 1;
-}
-
-.glitch-active::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: inherit;
-  opacity: 0.5;
-  mix-blend-mode: color-dodge;
-  z-index: 1;
 }
 </style>
 </head>
 
 <body>
-<!-- BACKGROUND MUSIC - WITH YOUR DROPBOX LINK -->
+<!-- BACKGROUND MUSIC - SEPARATE PLAYERS -->
 <audio id="weddingMusic" loop volume="0.3">
-  <!-- YOUR DROPBOX MUSIC (fixed URL with ?raw=1) -->
+  <!-- YOUR ORIGINAL MUSIC -->
   <source src="https://www.dropbox.com/scl/fi/fpfms7u1tzddtgw0f5dso/1-2.mp3?rlkey=qoy1dxmx0icqqbp9fu186l583&st=ywdfloyq&raw=1" type="audio/mpeg">
-  
-  <!-- Backup source 1 -->
-  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3" type="audio/mpeg">
-  
-  <!-- Backup source 2 -->
-  <source src="https://assets.codepen.io/1468070/romantic-piano.mp3" type="audio/mpeg">
-  
-  <!-- Backup source 3 -->
-  <source src="https://assets.codepen.io/1480817/canon-in-d.mp3" type="audio/mpeg">
-  
   Your browser does not support the audio element.
 </audio>
 
-<!-- MUSIC CONTROL - SMALLER -->
+<audio id="glitchMusic" loop volume="0.3">
+  <!-- GLITCH MUSIC -->
+  <source src="https://bobmasry.github.io/ehab-radwa/glitch-music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- MUSIC CONTROL -->
 <div class="music-control" id="musicControl">
   <i class="fas fa-music"></i>
 </div>
 
 <!-- HERO SECTION -->
 <section class="hero">
-  <!-- "We said yes" Corner Text - NO TRANSLUCENT BACKGROUND, NO EXCLAMATION -->
+  <!-- "We said yes" Corner Text -->
   <div class="hero-corner-text">
     <div class="we-said-yes" id="cornerText">We said yes</div>
     <div class="corner-date" id="cornerDate">01/01/2026</div>
+  </div>
+  
+  <!-- Image Carousel Indicators -->
+  <div class="carousel-indicators" id="carouselIndicators">
+    <!-- Will be generated by JavaScript -->
   </div>
   
   <div class="hero-content">
@@ -740,7 +584,7 @@ iframe {
 
   <div class="details" id="details">
     April 10, 2026<br>
-    Sunset Wedding Garden<br> <!-- CHANGED from SUNSET – Wedding Garden -->
+    Sunset Wedding Garden<br>
     Abou Rawash, Kerdasa, Giza Governorate<br>
     Cairo-Egypt<br>
     <em>Outdoor Wedding</em>
@@ -770,47 +614,82 @@ iframe {
 
 <script>
 // ============================================
-// MUSIC PLAYER WITH YOUR DROPBOX MUSIC - SIMPLIFIED
+// IMAGE CAROUSEL CONFIGURATION - ALL 4 IMAGES
 // ============================================
+const carouselImages = [
+  // Original image (first 10 seconds - NORMAL MUSIC)
+  "https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg",
+  
+  // Glitch image (second 10 seconds - GLITCH MUSIC & EFFECT)
+  "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
+  
+  // Third image (third 10 seconds - BACK TO NORMAL MUSIC)
+  "https://i.postimg.cc/cJDG4tYG/A0AF7014-1DBA-4E1A-838F-CC9150E6A78D.jpg",
+  
+  // Fourth image (fourth 10 seconds - NORMAL MUSIC)
+  "https://i.postimg.cc/XYpwDT8w/BD07CF10-5A47-4190-910C-C22286D269B4.jpg"
+];
 
-const music = document.getElementById('weddingMusic');
+// Image descriptions (for debugging/console)
+const imageDescriptions = [
+  "Original Image",
+  "Glitch Image",
+  "Third Image (Beautiful)",
+  "Fourth Image (Elegant)"
+];
+
+// ============================================
+// MUSIC PLAYER SYSTEM
+// ============================================
+const weddingMusic = document.getElementById('weddingMusic');
+const glitchMusic = document.getElementById('glitchMusic');
 const musicControl = document.getElementById('musicControl');
 const musicIcon = musicControl.querySelector('i');
 let isPlaying = false;
+let currentMusic = 'normal'; // 'normal' or 'glitch'
 
 // Set volume to 30%
-music.volume = 0.3;
+weddingMusic.volume = 0.3;
+glitchMusic.volume = 0.3;
 
-// Function to play music
-function playMusic() {
-  music.play().then(() => {
+// Play normal music
+function playNormalMusic() {
+  if (currentMusic !== 'normal') {
+    glitchMusic.pause();
+    weddingMusic.currentTime = 0;
+    currentMusic = 'normal';
+  }
+  
+  weddingMusic.play().then(() => {
     isPlaying = true;
     musicIcon.className = 'fas fa-pause';
     musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
   }).catch(e => {
     console.log("Music play failed:", e);
-    musicIcon.className = 'fas fa-music';
-    
-    // Try the backup source automatically
-    if (e.name === 'NotSupportedError' || e.name === 'TypeError') {
-      music.src = 'https://assets.mixkit.co/music/preview/mixkit-romantic-moments-530.mp3';
-      music.load();
-      
-      // Try playing again after loading
-      setTimeout(() => {
-        music.play().then(() => {
-          isPlaying = true;
-          musicIcon.className = 'fas fa-pause';
-          musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
-        });
-      }, 500);
-    }
   });
 }
 
-// Function to pause music
+// Play glitch music
+function playGlitchMusic() {
+  if (currentMusic !== 'glitch') {
+    weddingMusic.pause();
+    glitchMusic.currentTime = 0;
+    currentMusic = 'glitch';
+  }
+  
+  glitchMusic.play().then(() => {
+    isPlaying = true;
+    musicIcon.className = 'fas fa-pause';
+    musicControl.style.background = 'rgba(138, 154, 139, 0.9)';
+  }).catch(e => {
+    console.log("Glitch music play failed:", e);
+  });
+}
+
+// Pause both musics
 function pauseMusic() {
-  music.pause();
+  weddingMusic.pause();
+  glitchMusic.pause();
   isPlaying = false;
   musicIcon.className = 'fas fa-music';
   musicControl.style.background = 'rgba(255, 255, 255, 0.9)';
@@ -821,132 +700,131 @@ musicControl.addEventListener('click', function() {
   if (isPlaying) {
     pauseMusic();
   } else {
-    playMusic();
-  }
-});
-
-// Initialize when page loads
-window.addEventListener('load', function() {
-  // On mobile, we need user interaction first
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  if (!isMobile) {
-    // On desktop, try to auto-play after a short delay
-    setTimeout(() => {
-      playMusic();
-    }, 1500);
-  }
-});
-
-// ============================================
-// GLITCH EFFECT - SIMPLE VERSION
-// ============================================
-
-// ============================================
-// ✅ YOUR FINAL URLs INSERTED HERE ✅
-// ============================================
-
-// GLITCH IMAGE (from Postimages.org - UK compatible)
-const glitchImageUrl = 'https://i.postimg.cc/MTy4GrhH/RE1.jpg';
-
-// GLITCH MUSIC (from Google Drive - direct download link)
-const glitchMusicUrl = 'https://bobmasry.github.io/ehab-radwa/glitch-music.mp3';
-
-// ============================================
-// END OF CUSTOMIZATION - DON'T MODIFY BELOW
-// ============================================
-
-// Store original image
-const originalImage = "https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg";
-const hero = document.querySelector('.hero');
-
-let glitchActive = false;
-let glitchTimeout;
-
-function startGlitchEffect() {
-  if (glitchActive) return;
-  
-  glitchActive = true;
-  
-  // 1. Change hero image
-  hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${glitchImageUrl}')`;
-  
-  // 2. Add glitch animation class
-  hero.classList.add('glitch-active');
-  
-  // 3. Change music (only if music was playing)
-  if (!music.paused) {
-    window.originalMusicSrc = music.src; // Store the current source
-    const currentTime = music.currentTime;
-    music.pause();
-    music.src = glitchMusicUrl;
-    music.load();
-    music.currentTime = 0;
-    music.play().catch(e => console.log("Glitch music error:", e));
-    window.originalMusicTime = currentTime;
-    window.wasPlaying = true;
-  }
-  
-  console.log("🎭 Glitch ACTIVE - Image changed, music switched");
-  
-  // Deactivate after 20 seconds
-  glitchTimeout = setTimeout(() => {
-    stopGlitchEffect();
-  }, 20000);
-}
-
-function stopGlitchEffect() {
-  if (!glitchActive) return;
-  
-  glitchActive = false;
-  
-  // 1. Restore original image
-  hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${originalImage}')`;
-  
-  // 2. Remove glitch animation
-  hero.classList.remove('glitch-active');
-  
-  // 3. Restore original music if it was playing
-  if (window.wasPlaying && window.originalMusicSrc) {
-    music.pause();
-    music.src = window.originalMusicSrc; // Restore to whatever was playing
-    music.load();
-    
-    if (window.originalMusicTime) {
-      music.currentTime = window.originalMusicTime;
+    // Resume current music type
+    if (currentMusic === 'normal') {
+      playNormalMusic();
+    } else {
+      playGlitchMusic();
     }
-    
-    setTimeout(() => {
-      music.play().catch(e => console.log("Restore music error:", e));
-    }, 500);
   }
-  
-  console.log("🎭 Glitch INACTIVE - Back to normal");
-  
-  // Start next glitch in 30 seconds
-  setTimeout(() => {
-    startGlitchEffect();
-  }, 30000);
-}
-
-// Start the glitch cycle after 30 seconds
-setTimeout(() => {
-  startGlitchEffect();
-  console.log("⏰ Glitch cycle started - Will repeat every 50 seconds");
-}, 30000);
+});
 
 // ============================================
-// LANGUAGE CONTENT (UPDATED - NO EXCLAMATION, SUNSET FIXED)
+// IMAGE CAROUSEL SYSTEM
+// ============================================
+const hero = document.querySelector('.hero');
+let currentImageIndex = 0;
+let carouselInterval;
+
+// Initialize carousel indicators
+function initCarouselIndicators() {
+  const container = document.getElementById('carouselIndicators');
+  container.innerHTML = '';
+  
+  carouselImages.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+    dot.dataset.index = index;
+    dot.addEventListener('click', () => goToImage(index));
+    container.appendChild(dot);
+  });
+}
+
+// Update active indicator
+function updateIndicators() {
+  const dots = document.querySelectorAll('.carousel-dot');
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentImageIndex);
+  });
+}
+
+// Change hero image
+function changeHeroImage(index) {
+  currentImageIndex = index;
+  const imageUrl = carouselImages[index];
+  
+  console.log(`🎨 Changing to image ${index + 1}/4: ${imageDescriptions[index]}`);
+  
+  // Apply glitch effect ONLY for the glitch image (index 1)
+  if (index === 1) {
+    console.log("🎭 Activating glitch effect and music");
+    hero.classList.add('glitch-active');
+    // Switch to glitch music
+    playGlitchMusic();
+  } else {
+    hero.classList.remove('glitch-active');
+    // Switch to normal music for other images
+    playNormalMusic();
+  }
+  
+  // Update background image with smooth transition
+  hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
+  
+  // Update indicators
+  updateIndicators();
+}
+
+// Go to specific image
+function goToImage(index) {
+  clearInterval(carouselInterval);
+  changeHeroImage(index);
+  startCarousel();
+}
+
+// Start automatic carousel
+function startCarousel() {
+  clearInterval(carouselInterval);
+  
+  carouselInterval = setInterval(() => {
+    currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+    changeHeroImage(currentImageIndex);
+  }, 10000); // Change every 10 seconds
+}
+
+// ============================================
+// INITIALIZE EVERYTHING
+// ============================================
+window.addEventListener('load', function() {
+  console.log("🚀 Wedding invitation loaded!");
+  console.log("📸 Carousel images:", carouselImages.length);
+  console.log("🔄 Pattern: Image 1 (Normal) → Image 2 (Glitch) → Image 3 (Normal) → Image 4 (Normal)");
+  console.log("🎵 Music: Normal for images 1,3,4 | Glitch for image 2");
+  console.log("⏱️ Each image displays for 10 seconds");
+  
+  // Initialize carousel
+  initCarouselIndicators();
+  changeHeroImage(0); // Start with first image (normal music)
+  
+  // Start carousel after initial delay
+  setTimeout(() => {
+    startCarousel();
+    console.log("🔄 Carousel started - rotating every 10 seconds");
+  }, 10000); // First change after 10 seconds
+  
+  // Start music on desktop
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile) {
+    setTimeout(() => {
+      playNormalMusic();
+      console.log("🎵 Auto-playing normal music on desktop");
+    }, 1500);
+  } else {
+    console.log("📱 Mobile device detected - music will start on user interaction");
+  }
+});
+
+// ============================================
+// LANGUAGE CONTENT
 // ============================================
 const content = {
   en: {
     heroTitle: "Ehab & Radwa",
-    heroSubtitle: "We're getting married", // Not uppercase
+    heroSubtitle: "We're getting married",
     title: "Ehab & Radwa",
-    subtitle: "We're getting married", // Not uppercase
-    details: "April 10, 2026<br>Sunset Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>", // CHANGED SUNSET
+    subtitle: "We're getting married",
+    details: "April 10, 2026<br>Sunset Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
     message: "With great joy, we invite you to celebrate our wedding. Your presence means the world to us.",
-    cornerText: "We said yes", // NO EXCLAMATION MARK
+    cornerText: "We said yes",
     cornerDate: "01/01/2026",
     guestText: "guests confirmed",
     directionsText: "Get Directions",
@@ -959,7 +837,7 @@ const content = {
     subtitle: "يسعدنا دعوتكم لحفل زفافنا",
     details: "10 أبريل 2026<br>سن ست - المنصوريه بارك حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
     message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
-    cornerText: "قلنا نعم", // NO EXCLAMATION MARK IN ARABIC
+    cornerText: "قلنا نعم",
     cornerDate: "٠١/٠١/٢٠٢٦",
     guestText: "ضيفاً أكدوا الحضور",
     directionsText: "احصل على الاتجاهات",
@@ -986,28 +864,30 @@ function setLang(lang) {
   document.getElementById("guestText").innerHTML = content[lang].guestText;
   document.getElementById("directionsText").innerHTML = content[lang].directionsText;
   
-  // Update countdown text for Arabic
+  // Update countdown
   updateCountdown(lang);
   
   // Update card direction for Arabic
   document.getElementById("card").className = "wrapper " + (lang === "ar" ? "ar" : "");
 }
 
+// ============================================
 // LIVE GUEST COUNT
+// ============================================
 fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRcFln6zjhh17fh8cViZnzhe-7DK3QkjyceT5L7FIinCrWJ0ARx_FzyXqMHDAyEIgSaCM3kGz5cXcXf/pub?gid=2032972080&single=true&output=txt")
   .then(r => r.text())
   .then(n => {
     const guestCount = n.trim();
     document.getElementById("guestCount").innerText = guestCount;
-    window.guestCount = guestCount;
   })
   .catch(error => {
     console.error('Error fetching guest count:', error);
     document.getElementById("guestCount").innerText = "Many";
-    window.guestCount = "Many";
   });
 
+// ============================================
 // COUNTDOWN TIMER
+// ============================================
 const weddingDate = new Date("2026-04-10T18:00:00");
 
 function updateCountdown(lang = 'en') {
