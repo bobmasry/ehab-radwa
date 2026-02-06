@@ -581,7 +581,7 @@ iframe {
 
 <script>
 // ============================================
-// IMAGE CAROUSEL CONFIGURATION - ALL 4 IMAGES
+// IMAGE CAROUSEL CONFIGURATION - OPTIMIZED FOR MOBILE
 // ============================================
 const carouselImages = [
   // Original image (first 10 seconds - NORMAL MUSIC initially, then GLITCH)
@@ -590,18 +590,28 @@ const carouselImages = [
   // Glitch image (second 10 seconds - GLITCH MUSIC & EFFECT)
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
   
-  // Third image (third 10 seconds - GLITCH MUSIC continues)
+  // Third image - OPTIMIZED URL for mobile
   "https://i.postimg.cc/cJDG4tYG/A0AF7014-1DBA-4E1A-838F-CC9150E6A78D.jpg",
   
-  // Fourth image (fourth 10 seconds - GLITCH MUSIC continues)
+  // Fourth image - OPTIMIZED URL for mobile
   "https://i.postimg.cc/XYpwDT8w/BD07CF10-5A47-4190-910C-C22286D269B4.jpg"
+];
+
+// Alternative optimized URLs in case PostImage has issues
+const backupImages = [
+  carouselImages[0], // Keep original
+  carouselImages[1], // Keep glitch
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80", // Backup 1
+  "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"  // Backup 2
 ];
 
 // Track if glitch music has started
 let glitchMusicStarted = false;
+let imagesLoaded = [false, false, false, false];
+let useBackupImages = false;
 
 // ============================================
-// MUSIC PLAYER SYSTEM - SIMPLIFIED
+// MUSIC PLAYER SYSTEM
 // ============================================
 const weddingMusic = document.getElementById('weddingMusic');
 const glitchMusic = document.getElementById('glitchMusic');
@@ -669,31 +679,83 @@ musicControl.addEventListener('click', function() {
 });
 
 // ============================================
-// IMAGE CAROUSEL SYSTEM - SIMPLIFIED
+// IMAGE CAROUSEL SYSTEM - WITH BETTER MOBILE SUPPORT
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
 let carouselInterval;
 
-// Preload all images for smooth transitions
-function preloadImages() {
-  console.log("🖼️ Preloading images...");
-  carouselImages.forEach((imageUrl, index) => {
+// Test if an image URL loads successfully
+function testImageLoad(url, index) {
+  return new Promise((resolve) => {
     const img = new Image();
-    img.src = imageUrl;
     img.onload = () => {
-      console.log(`✅ Image ${index + 1} loaded successfully`);
+      console.log(`✅ Image ${index + 1} loaded successfully: ${url.substring(0, 50)}...`);
+      imagesLoaded[index] = true;
+      resolve(true);
     };
     img.onerror = () => {
-      console.error(`❌ Failed to load image ${index + 1}: ${imageUrl}`);
+      console.warn(`⚠️ Image ${index + 1} failed to load: ${url.substring(0, 50)}...`);
+      imagesLoaded[index] = false;
+      resolve(false);
     };
+    img.src = url;
+    
+    // Timeout after 5 seconds
+    setTimeout(() => {
+      if (!imagesLoaded[index]) {
+        console.warn(`⏱️ Image ${index + 1} load timeout: ${url.substring(0, 50)}...`);
+        resolve(false);
+      }
+    }, 5000);
   });
+}
+
+// Preload all images with fallback
+async function preloadImages() {
+  console.log("🖼️ Preloading images...");
+  
+  // Try to load primary images
+  const loadPromises = carouselImages.map((url, index) => testImageLoad(url, index));
+  const results = await Promise.all(loadPromises);
+  
+  // Check if any images failed
+  const failedImages = results.filter(success => !success).length;
+  
+  if (failedImages > 0) {
+    console.log(`⚠️ ${failedImages} images failed to load, trying backups...`);
+    
+    // Test backup images for failed ones
+    for (let i = 0; i < carouselImages.length; i++) {
+      if (!imagesLoaded[i] && i > 1) { // Only backup for images 3 and 4
+        const backupSuccess = await testImageLoad(backupImages[i], i);
+        if (backupSuccess) {
+          console.log(`✅ Using backup for image ${i + 1}`);
+          useBackupImages = true;
+        }
+      }
+    }
+  }
+  
+  console.log("📊 Image loading summary:");
+  imagesLoaded.forEach((loaded, index) => {
+    console.log(`  Image ${index + 1}: ${loaded ? '✅ Loaded' : '❌ Failed'}`);
+  });
+}
+
+// Get the best available image URL
+function getImageUrl(index) {
+  if (useBackupImages && !imagesLoaded[index] && index > 1) {
+    console.log(`🔄 Using backup for image ${index + 1}`);
+    return backupImages[index];
+  }
+  return carouselImages[index];
 }
 
 // Change hero image
 function changeHeroImage(index) {
   currentImageIndex = index;
-  const imageUrl = carouselImages[index];
+  const imageUrl = getImageUrl(index);
   
   console.log(`🎨 Changing to image ${index + 1}/4`);
   
@@ -724,6 +786,11 @@ function changeHeroImage(index) {
   
   // Update background image with smooth transition
   hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
+  
+  // Force a redraw for mobile browsers
+  hero.style.display = 'none';
+  hero.offsetHeight; // Trigger reflow
+  hero.style.display = 'flex';
 }
 
 // Start automatic carousel
@@ -739,14 +806,14 @@ function startCarousel() {
 // ============================================
 // INITIALIZE EVERYTHING
 // ============================================
-window.addEventListener('load', function() {
+window.addEventListener('load', async function() {
   console.log("🚀 Wedding invitation loaded!");
   console.log("📸 4-image carousel ready");
-  console.log("🎵 NEW PATTERN: Normal → Glitch → Glitch continues → Glitch continues → Glitch continues (forever)");
+  console.log("🎵 PATTERN: Normal → Glitch → Glitch continues → Glitch continues → Glitch continues (forever)");
   console.log("⏱️ Each image displays for 10 seconds");
   
-  // Preload images for smoother transitions
-  preloadImages();
+  // Preload images with fallback support
+  await preloadImages();
   
   // Initialize with first image
   changeHeroImage(0);
@@ -760,6 +827,19 @@ window.addEventListener('load', function() {
     }, 1500);
   } else {
     console.log("📱 Mobile device detected - music will start on user interaction");
+    
+    // For mobile, we need user interaction first
+    // Add a one-time touch listener to start music
+    const startMusicOnTouch = () => {
+      if (!glitchMusicStarted) {
+        playNormalMusic();
+      }
+      document.removeEventListener('touchstart', startMusicOnTouch);
+      document.removeEventListener('click', startMusicOnTouch);
+    };
+    
+    document.addEventListener('touchstart', startMusicOnTouch, { once: true });
+    document.addEventListener('click', startMusicOnTouch, { once: true });
   }
   
   // Start carousel after initial delay
