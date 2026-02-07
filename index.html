@@ -44,7 +44,7 @@ body::before {
   z-index: -1;
 }
 
-/* ===== HERO SECTION WITH CONSISTENT TRANSITIONS ===== */
+/* ===== HERO SECTION WITH CLEAN TRANSITIONS ===== */
 .hero {
   height: 100vh;
   background-size: cover;
@@ -58,7 +58,6 @@ body::before {
   overflow: hidden;
 }
 
-/* Simple overlay that's always there */
 .hero::before {
   content: "";
   position: absolute;
@@ -446,14 +445,9 @@ iframe {
   animation: float 4s ease-in-out infinite;
 }
 
-/* Smooth fade transition for images */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.image-fade-in {
-  animation: fadeIn 0.8s ease-in-out;
+/* Smooth image transition */
+.hero {
+  transition: background-image 1s ease-in-out;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -523,13 +517,13 @@ iframe {
 </head>
 
 <body>
-<!-- BACKGROUND MUSIC - SIMPLE -->
+<!-- SINGLE MUSIC PLAYER - GLITCH MUSIC ONLY -->
 <audio id="weddingMusic" loop volume="0.3">
-  <source src="https://www.dropbox.com/scl/fi/fpfms7u1tzddtgw0f5dso/1-2.mp3?rlkey=qoy1dxmx0icqqbp9fu186l583&st=ywdfloyq&raw=1" type="audio/mpeg">
-</audio>
-
-<audio id="glitchMusic" loop volume="0.3">
+  <!-- GLITCH MUSIC - Using GitHub URL for reliability -->
   <source src="https://bobmasry.github.io/ehab-radwa/glitch-music.mp3" type="audio/mpeg">
+  <!-- Backup from Dropbox in case GitHub fails -->
+  <source src="https://www.dropbox.com/scl/fi/gfdlghakb57l3mzcgil9q/glitch-music.mp3?rlkey=abcdefghijklmnopqrstuvwxyz&st=123456&raw=1" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
 
 <!-- MUSIC CONTROL -->
@@ -596,7 +590,7 @@ iframe {
 
 <script>
 // ============================================
-// IMAGE CAROUSEL CONFIGURATION - ORIGINAL ORDER
+// IMAGE CAROUSEL CONFIGURATION
 // ============================================
 const carouselImages = [
   // Image 1: Original elegant photo
@@ -605,59 +599,37 @@ const carouselImages = [
   // Image 2: Glitch photo
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
   
-  // Image 3: Elegant couple photo (ORIGINAL - not swapped)
+  // Image 3: Elegant couple photo
   "https://image2url.com/r2/default/images/1770392971859-6095db24-5bef-4f25-85e9-877b5f9af921.jpeg",
   
-  // Image 4: Romantic silhouette photo (ORIGINAL - not swapped)
+  // Image 4: Romantic silhouette photo
   "https://image2url.com/r2/default/images/1770392899407-3eb14233-ed41-4d77-9310-7fa9270af9e7.jpeg"
 ];
 
-// Track loaded images
-const loadedImages = {};
-
 // ============================================
-// SIMPLE MUSIC PLAYER
+// SIMPLE MUSIC PLAYER - SINGLE MUSIC ONLY
 // ============================================
 const weddingMusic = document.getElementById('weddingMusic');
-const glitchMusic = document.getElementById('glitchMusic');
 const musicControl = document.getElementById('musicControl');
 const musicIcon = musicControl.querySelector('i');
 
 // Simple state
 let isPlaying = false;
-let glitchMusicStarted = false;
 let userStoppedMusic = false;
 
 // Set volume
 weddingMusic.volume = 0.3;
-glitchMusic.volume = 0.3;
 
-// Play normal music (on desktop only)
-function playNormalMusic() {
-  if (!glitchMusicStarted && !userStoppedMusic) {
+// Play music (try on desktop, mobile will need interaction)
+function playMusic() {
+  if (!userStoppedMusic) {
     weddingMusic.play().then(() => {
       isPlaying = true;
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
-    }).catch(() => {
-      // Expected to fail on mobile - that's OK
-    });
-  }
-}
-
-// Play glitch music
-function playGlitchMusic() {
-  glitchMusicStarted = true;
-  
-  if (!userStoppedMusic) {
-    weddingMusic.pause();
-    
-    glitchMusic.play().then(() => {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-pause';
-      musicControl.classList.remove('music-off');
-    }).catch(() => {
-      // On mobile, will fail until user interacts
+    }).catch(error => {
+      console.log("Auto-play failed (normal for mobile):", error.name);
+      // On mobile, music will start when user clicks play button
     });
   }
 }
@@ -667,7 +639,6 @@ musicControl.addEventListener('click', function() {
   if (isPlaying) {
     // Pause
     weddingMusic.pause();
-    glitchMusic.pause();
     isPlaying = false;
     userStoppedMusic = true;
     musicIcon.className = 'fas fa-music';
@@ -675,19 +646,16 @@ musicControl.addEventListener('click', function() {
   } else {
     // Play
     userStoppedMusic = false;
-    if (glitchMusicStarted) {
-      glitchMusic.play();
-    } else {
-      weddingMusic.play();
-    }
-    isPlaying = true;
-    musicIcon.className = 'fas fa-pause';
-    musicControl.classList.remove('music-off');
+    weddingMusic.play().then(() => {
+      isPlaying = true;
+      musicIcon.className = 'fas fa-pause';
+      musicControl.classList.remove('music-off');
+    });
   }
 });
 
 // ============================================
-// SIMPLE IMAGE CAROUSEL WITH CLEAN TRANSITIONS
+// SIMPLE IMAGE CAROUSEL
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
@@ -696,22 +664,14 @@ let carouselInterval;
 // Preload an image
 function preloadImage(url) {
   return new Promise((resolve) => {
-    if (loadedImages[url]) {
-      resolve(true);
-      return;
-    }
-    
     const img = new Image();
-    img.onload = () => {
-      loadedImages[url] = true;
-      resolve(true);
-    };
+    img.onload = () => resolve(true);
     img.onerror = () => resolve(false);
     img.src = url;
   });
 }
 
-// Simple image change with clean fade
+// Change image
 function changeHeroImage(index) {
   currentImageIndex = index;
   const imageUrl = carouselImages[index];
@@ -719,22 +679,12 @@ function changeHeroImage(index) {
   // Glitch effect only on second image
   if (index === 1) {
     hero.classList.add('glitch-active');
-    // Try to start glitch music
-    if (!glitchMusicStarted) {
-      playGlitchMusic();
-    }
   } else {
     hero.classList.remove('glitch-active');
   }
   
-  // Apply image with simple transition
+  // Update background with smooth transition
   hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
-  
-  // Add fade-in class for smooth transition
-  hero.classList.add('image-fade-in');
-  setTimeout(() => {
-    hero.classList.remove('image-fade-in');
-  }, 800);
 }
 
 // Start carousel
@@ -748,32 +698,34 @@ function startCarousel() {
 }
 
 // ============================================
-// INITIALIZE
+// INITIALIZE EVERYTHING
 // ============================================
 window.addEventListener('load', async function() {
-  console.log("🚀 Wedding invitation starting...");
+  console.log("🎉 Ehab & Radwa Wedding Invitation");
   
-  // Preload first image immediately
+  // Preload first image
   await preloadImage(carouselImages[0]);
   
   // Start with first image
   changeHeroImage(0);
+  
+  // Try to play music automatically (works on desktop)
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile) {
+    setTimeout(playMusic, 1000);
+  } else {
+    console.log("📱 Mobile device: Music starts on user interaction");
+  }
   
   // Preload other images in background
   for (let i = 1; i < carouselImages.length; i++) {
     preloadImage(carouselImages[i]);
   }
   
-  // Try to play normal music on desktop
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  if (!isMobile) {
-    setTimeout(playNormalMusic, 1500);
-  }
-  
   // Start carousel after 10 seconds
   setTimeout(() => {
     startCarousel();
-    console.log("🔄 Carousel started with clean fade transitions");
+    console.log("🔄 Image carousel started (10s per image)");
   }, 10000);
 });
 
