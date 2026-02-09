@@ -44,7 +44,7 @@ body::before {
   z-index: -1;
 }
 
-/* ===== HERO SECTION WITH CLEAN TRANSITIONS ===== */
+/* ===== HERO SECTION ===== */
 .hero {
   height: 100vh;
   background-size: cover;
@@ -56,6 +56,7 @@ body::before {
   text-align: center;
   position: relative;
   overflow: hidden;
+  transition: background-image 1s ease-in-out;
 }
 
 .hero::before {
@@ -181,39 +182,6 @@ body::before {
 
 .music-control.music-off i {
   color: rgba(166, 138, 111, 0.5);
-}
-
-/* ===== GLITCH EFFECT STYLES ===== */
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  2% {
-    transform: translate(-2px, 1px);
-    filter: hue-rotate(10deg) brightness(1.1) contrast(1.1);
-  }
-  4% {
-    transform: translate(1px, -1px);
-    filter: hue-rotate(-5deg) brightness(0.9) contrast(1.1);
-  }
-  6% {
-    transform: translate(-1px, 2px);
-    filter: hue-rotate(5deg) brightness(1.05) contrast(0.95);
-  }
-  8% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-  100% {
-    transform: translate(0);
-    filter: hue-rotate(0deg) brightness(1) contrast(1);
-  }
-}
-
-.glitch-active {
-  animation: glitch 0.5s linear infinite;
-  position: relative;
 }
 
 /* ===== MAIN CARD ===== */
@@ -445,11 +413,6 @@ iframe {
   animation: float 4s ease-in-out infinite;
 }
 
-/* Smooth image transition */
-.hero {
-  transition: background-image 1s ease-in-out;
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero {
@@ -517,12 +480,10 @@ iframe {
 </head>
 
 <body>
-<!-- SINGLE MUSIC PLAYER - GLITCH MUSIC ONLY -->
+<!-- SINGLE MUSIC PLAYER -->
 <audio id="weddingMusic" loop volume="0.3">
-  <!-- GLITCH MUSIC - Using GitHub URL for reliability -->
+  <!-- Your glitch music from GitHub -->
   <source src="https://bobmasry.github.io/ehab-radwa/glitch-music.mp3" type="audio/mpeg">
-  <!-- Backup from Dropbox in case GitHub fails -->
-  <source src="https://www.dropbox.com/scl/fi/gfdlghakb57l3mzcgil9q/glitch-music.mp3?rlkey=abcdefghijklmnopqrstuvwxyz&st=123456&raw=1" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
@@ -590,46 +551,37 @@ iframe {
 
 <script>
 // ============================================
-// IMAGE CAROUSEL CONFIGURATION
+// IMAGE CAROUSEL - CLEAN & SIMPLE
 // ============================================
 const carouselImages = [
-  // Image 1: Original elegant photo
   "https://image2url.com/r2/default/images/1769442129680-37eb1cd9-c88d-4fc6-9855-65564542af3c.jpeg",
-  
-  // Image 2: Glitch photo
   "https://i.postimg.cc/MTy4GrhH/RE1.jpg",
-  
-  // Image 3: Elegant couple photo
   "https://image2url.com/r2/default/images/1770392971859-6095db24-5bef-4f25-85e9-877b5f9af921.jpeg",
-  
-  // Image 4: Romantic silhouette photo
   "https://image2url.com/r2/default/images/1770392899407-3eb14233-ed41-4d77-9310-7fa9270af9e7.jpeg"
 ];
 
 // ============================================
-// SIMPLE MUSIC PLAYER - SINGLE MUSIC ONLY
+// MUSIC PLAYER - SINGLE TRACK
 // ============================================
 const weddingMusic = document.getElementById('weddingMusic');
 const musicControl = document.getElementById('musicControl');
 const musicIcon = musicControl.querySelector('i');
 
-// Simple state
 let isPlaying = false;
 let userStoppedMusic = false;
 
 // Set volume
 weddingMusic.volume = 0.3;
 
-// Play music (try on desktop, mobile will need interaction)
+// Play music
 function playMusic() {
   if (!userStoppedMusic) {
     weddingMusic.play().then(() => {
       isPlaying = true;
       musicIcon.className = 'fas fa-pause';
       musicControl.classList.remove('music-off');
-    }).catch(error => {
-      console.log("Auto-play failed (normal for mobile):", error.name);
-      // On mobile, music will start when user clicks play button
+    }).catch(() => {
+      // Normal for mobile - user will click play button
     });
   }
 }
@@ -637,14 +589,12 @@ function playMusic() {
 // Toggle music
 musicControl.addEventListener('click', function() {
   if (isPlaying) {
-    // Pause
     weddingMusic.pause();
     isPlaying = false;
     userStoppedMusic = true;
     musicIcon.className = 'fas fa-music';
     musicControl.classList.add('music-off');
   } else {
-    // Play
     userStoppedMusic = false;
     weddingMusic.play().then(() => {
       isPlaying = true;
@@ -655,35 +605,18 @@ musicControl.addEventListener('click', function() {
 });
 
 // ============================================
-// SIMPLE IMAGE CAROUSEL
+// IMAGE CAROUSEL
 // ============================================
 const hero = document.querySelector('.hero');
 let currentImageIndex = 0;
 let carouselInterval;
-
-// Preload an image
-function preloadImage(url) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-}
 
 // Change image
 function changeHeroImage(index) {
   currentImageIndex = index;
   const imageUrl = carouselImages[index];
   
-  // Glitch effect only on second image
-  if (index === 1) {
-    hero.classList.add('glitch-active');
-  } else {
-    hero.classList.remove('glitch-active');
-  }
-  
-  // Update background with smooth transition
+  // Simple image update - NO glitch effect
   hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
 }
 
@@ -698,35 +631,20 @@ function startCarousel() {
 }
 
 // ============================================
-// INITIALIZE EVERYTHING
+// INITIALIZE
 // ============================================
-window.addEventListener('load', async function() {
-  console.log("🎉 Ehab & Radwa Wedding Invitation");
-  
-  // Preload first image
-  await preloadImage(carouselImages[0]);
-  
+window.addEventListener('load', function() {
   // Start with first image
   changeHeroImage(0);
   
-  // Try to play music automatically (works on desktop)
+  // Try to play music on desktop
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   if (!isMobile) {
     setTimeout(playMusic, 1000);
-  } else {
-    console.log("📱 Mobile device: Music starts on user interaction");
-  }
-  
-  // Preload other images in background
-  for (let i = 1; i < carouselImages.length; i++) {
-    preloadImage(carouselImages[i]);
   }
   
   // Start carousel after 10 seconds
-  setTimeout(() => {
-    startCarousel();
-    console.log("🔄 Image carousel started (10s per image)");
-  }, 10000);
+  setTimeout(startCarousel, 10000);
 });
 
 // ============================================
