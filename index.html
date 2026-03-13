@@ -503,7 +503,7 @@ iframe {
   <div class="hero-content">
     <h1 class="hero-names floating" id="heroTitle">Ehab & Radwa</h1>
     <p class="hero-subtitle floating" id="heroSubtitle">We're getting married</p>
-    <div class="hero-date">April 10, 2026</div>
+    <div class="hero-date">April 10, 2026<br><span style="font-size: 0.9rem; display: block; margin-top: 5px; letter-spacing: 1px;" id="heroTime">Arrival 2:30pm / Ceremony 3:30pm</span></div>
   </div>
 </section>
 
@@ -521,6 +521,7 @@ iframe {
 
   <div class="details" id="details">
     April 10, 2026<br>
+    <span id="detailsTime">Arrival 2:30pm / Ceremony 3:30pm</span><br>
     Sunset Wedding Garden<br>
     Abou Rawash, Kerdasa, Giza Governorate<br>
     Cairo-Egypt<br>
@@ -654,9 +655,10 @@ const content = {
   en: {
     heroTitle: "Ehab & Radwa",
     heroSubtitle: "We're getting married",
+    heroTime: "Arrival 2:30pm / Ceremony 3:30pm",
     title: "Ehab & Radwa",
     subtitle: "We're getting married",
-    details: "April 10, 2026<br>Sunset Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
+    details: "April 10, 2026<br>Arrival 2:30pm / Ceremony 3:30pm<br>Sunset Wedding Garden<br>Abou Rawash, Kerdasa, Giza Governorate<br>Cairo-Egypt<br><em>Outdoor Wedding</em>",
     message: "With great joy, we invite you to celebrate our wedding. Your presence means the world to us.",
     cornerText: "We said yes",
     cornerDate: "01/01/2026",
@@ -667,9 +669,10 @@ const content = {
   ar: {
     heroTitle: "إيهاب ورضوى",
     heroSubtitle: "يسعدنا دعوتكم لحفل زفافنا",
+    heroTime: "الوصول الساعة 2:30 مساءً / مراسم الزفاف الساعة 3:30 مساءً",
     title: "إيهاب ورضوى",
     subtitle: "يسعدنا دعوتكم لحفل زفافنا",
-    details: "10 أبريل 2026<br>سن ست - المنصوريه بارك حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
+    details: "10 أبريل 2026<br>الوصول الساعة 2:30 مساءً / مراسم الزفاف الساعة 3:30 مساءً<br>سن ست - المنصوريه بارك حديقة الأفراح<br>أبو رواش، كرداسة، محافظة الجيزة<br>القاهرة، مصر<br><em>حفل في الهواء الطلق</em>",
     message: "بكل فرح وسعادة ندعوكم لمشاركتنا الاحتفال بزفافنا. حضوركم يشرفنا ويسعدنا.",
     cornerText: "قلنا نعم",
     cornerDate: "٠١/٠١/٢٠٢٦",
@@ -685,6 +688,7 @@ function setLang(lang) {
   
   document.getElementById("heroTitle").innerHTML = content[lang].heroTitle;
   document.getElementById("heroSubtitle").innerHTML = content[lang].heroSubtitle;
+  document.getElementById("heroTime").innerHTML = content[lang].heroTime;
   document.getElementById("title").innerHTML = content[lang].title;
   document.getElementById("subtitle").innerHTML = content[lang].subtitle;
   document.getElementById("details").innerHTML = content[lang].details;
